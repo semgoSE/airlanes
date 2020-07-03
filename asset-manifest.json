@@ -1,0 +1,22 @@
+{
+  "files": {
+    "main.js": "/airlanes/static/js/main.e7a968f7.chunk.js",
+    "main.js.map": "/airlanes/static/js/main.e7a968f7.chunk.js.map",
+    "runtime-main.js": "/airlanes/static/js/runtime-main.68f54f5d.js",
+    "runtime-main.js.map": "/airlanes/static/js/runtime-main.68f54f5d.js.map",
+    "static/css/2.8c9b10a9.chunk.css": "/airlanes/static/css/2.8c9b10a9.chunk.css",
+    "static/js/2.3edff615.chunk.js": "/airlanes/static/js/2.3edff615.chunk.js",
+    "static/js/2.3edff615.chunk.js.map": "/airlanes/static/js/2.3edff615.chunk.js.map",
+    "index.html": "/airlanes/index.html",
+    "precache-manifest.3bfcbb202df58978d6672c27f888bb49.js": "/airlanes/precache-manifest.3bfcbb202df58978d6672c27f888bb49.js",
+    "service-worker.js": "/airlanes/service-worker.js",
+    "static/css/2.8c9b10a9.chunk.css.map": "/airlanes/static/css/2.8c9b10a9.chunk.css.map",
+    "static/js/2.3edff615.chunk.js.LICENSE.txt": "/airlanes/static/js/2.3edff615.chunk.js.LICENSE.txt"
+  },
+  "entrypoints": [
+    "static/js/runtime-main.68f54f5d.js",
+    "static/css/2.8c9b10a9.chunk.css",
+    "static/js/2.3edff615.chunk.js",
+    "static/js/main.e7a968f7.chunk.js"
+  ]
+}

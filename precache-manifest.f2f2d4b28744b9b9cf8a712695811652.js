@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "a17d906fc388fd2b72e901796cd7a64d",
+    "revision": "98542911966fd1387cf9e2aff5181eb6",
     "url": "/airlanes/index.html"
   },
   {
@@ -16,8 +16,8 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/airlanes/static/js/2.15f018d2.chunk.js.LICENSE.txt"
   },
   {
-    "revision": "56a7646ac6e8cace3d48",
-    "url": "/airlanes/static/js/main.673dfc28.chunk.js"
+    "revision": "192b8d03b984b21d65b4",
+    "url": "/airlanes/static/js/main.2b8b5985.chunk.js"
   },
   {
     "revision": "1f50f898da9c8b99372a",

@@ -1,6 +1,6 @@
 self.__precacheManifest = (self.__precacheManifest || []).concat([
   {
-    "revision": "ac40e66115d8796502676bdbba9c2b6a",
+    "revision": "375f93a41552de3dc72e01fec0098394",
     "url": "/airlanes/index.html"
   },
   {
@@ -8,16 +8,16 @@ self.__precacheManifest = (self.__precacheManifest || []).concat([
     "url": "/airlanes/static/css/2.1e562f28.chunk.css"
   },
   {
-    "revision": "9e13d7ef5436de13cf23",
-    "url": "/airlanes/static/css/main.b6910d4c.chunk.css"
+    "revision": "6933bc294d142c5c96c2",
+    "url": "/airlanes/static/css/main.7f30bcda.chunk.css"
   },
   {
     "revision": "a8a0e390fa5029e09730",
     "url": "/airlanes/static/js/2.0f17b217.chunk.js"
   },
   {
-    "revision": "9e13d7ef5436de13cf23",
-    "url": "/airlanes/static/js/main.44713c41.chunk.js"
+    "revision": "6933bc294d142c5c96c2",
+    "url": "/airlanes/static/js/main.2483fd79.chunk.js"
   },
   {
     "revision": "2ea48836d6c8b81bb14b",

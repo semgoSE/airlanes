@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/airlanes/static/css/main.3dd2c4ee.chunk.css",
-    "main.js": "/airlanes/static/js/main.7165eb64.chunk.js",
-    "main.js.map": "/airlanes/static/js/main.7165eb64.chunk.js.map",
+    "main.js": "/airlanes/static/js/main.1828999e.chunk.js",
+    "main.js.map": "/airlanes/static/js/main.1828999e.chunk.js.map",
     "runtime-main.js": "/airlanes/static/js/runtime-main.b637fd51.js",
     "runtime-main.js.map": "/airlanes/static/js/runtime-main.b637fd51.js.map",
     "static/css/2.1e562f28.chunk.css": "/airlanes/static/css/2.1e562f28.chunk.css",
-    "static/js/2.b478d5b2.chunk.js": "/airlanes/static/js/2.b478d5b2.chunk.js",
-    "static/js/2.b478d5b2.chunk.js.map": "/airlanes/static/js/2.b478d5b2.chunk.js.map",
+    "static/js/2.7719bed2.chunk.js": "/airlanes/static/js/2.7719bed2.chunk.js",
+    "static/js/2.7719bed2.chunk.js.map": "/airlanes/static/js/2.7719bed2.chunk.js.map",
     "index.html": "/airlanes/index.html",
-    "precache-manifest.17b3e9cac2a1106df0ec9caba6b7720f.js": "/airlanes/precache-manifest.17b3e9cac2a1106df0ec9caba6b7720f.js",
+    "precache-manifest.413501d766eca79cf0f181b61d18f69e.js": "/airlanes/precache-manifest.413501d766eca79cf0f181b61d18f69e.js",
     "service-worker.js": "/airlanes/service-worker.js",
     "static/css/2.1e562f28.chunk.css.map": "/airlanes/static/css/2.1e562f28.chunk.css.map",
     "static/css/main.3dd2c4ee.chunk.css.map": "/airlanes/static/css/main.3dd2c4ee.chunk.css.map",
@@ -18,8 +18,8 @@
   "entrypoints": [
     "static/js/runtime-main.b637fd51.js",
     "static/css/2.1e562f28.chunk.css",
-    "static/js/2.b478d5b2.chunk.js",
+    "static/js/2.7719bed2.chunk.js",
     "static/css/main.3dd2c4ee.chunk.css",
-    "static/js/main.7165eb64.chunk.js"
+    "static/js/main.1828999e.chunk.js"
   ]
 }

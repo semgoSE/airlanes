@@ -149,7 +149,7 @@ export default class MySubs extends Component {
         this.setState({ DB: data.requests, groups: arr, progress:70, countGroups:arrGroups.length,  countDB:data.requests.length, activeTab:(data.requests.length == 0 && arrGroups.length == 0 ? '' : 'groups')});
         this.props.onChangeGroups('countDB', data.requests.length)
         setTimeout(() => this.setState({ progress:99 }), 700);
-        setTimeout(() => {this.setState({ progress:100, is_open:(data.requests.length || arrGroups.length) });this.props.onChangeGroups('is_first', false)}, 1200);
+        setTimeout(() => {this.setState({ progress:100, is_open:(data.requests.length || arrGroups.length), activeTab:this.props.state.activeTabSub });this.props.onChangeGroups('is_first', false)}, 1200);
       }).catch(err => {
         this.props.setPopout(null)
         this.setState({snackbar:<SnackbarError close={() => this.setState({snackbar:null})}/>, data:'error'})
@@ -249,7 +249,7 @@ export default class MySubs extends Component {
         </FixedLayout>
         }
         <Div />
-        {progress !== 100 ? <Load progress={progress} is_first={this.props.state.is_first} state={this.props.state} user={this.props.state.user}/> :
+        {progress !== 100 ? <Load progress={progress} is_first={this.props.state.is_first} state={this.props.state} openModal={this.props.openModal} user={this.props.state.user}/> :
         <div>
           {this.state.is_open ? 
         <div>

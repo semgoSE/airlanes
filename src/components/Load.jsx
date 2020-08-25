@@ -1,6 +1,8 @@
 import React, { Component } from 'react'
 import logo from '../img/logo.png';
-import { Panel, Avatar, Div, Progress, Spinner, FixedLayout, InfoRow } from '@vkontakte/vkui';
+import loadSound from './load.mp3';
+import {Howl, Howler} from 'howler';
+import { Panel, Avatar, Div, Progress, Spinner, FixedLayout, InfoRow, Button } from '@vkontakte/vkui';
 
 
 export default class Load extends Component {
@@ -10,9 +12,19 @@ state = {
 }
 
 componentDidMount() {
-
+    let sound = new Howl({
+        src: [loadSound],
+        autoplay: true,
+        volume: 0.4,
+        onend: function() {
+         console.log('ff');
+        }
+      });
+      sound.once('load', function(){
+        sound.play();
+      });
     let h = new Date().getHours()
-    if(h >=  0 && h < 6) 
+    if(h >=  0 && h < 6)
         this.setState({ welcome: 'Доброй ночи, ' + this.props.state.user.first_name + '!'})
     else 
         if(h >=6 && h < 12)
@@ -24,6 +36,7 @@ componentDidMount() {
                 this.setState({ welcome: 'Добрый вечер, ' + this.props.state.user.first_name + '!'})
     setTimeout(() => this.setState({welcome: 'Cегодня ' + new Date().toLocaleString('ru', { day: 'numeric', month: 'long' }) }), 2000)
 }
+
 
 
  getStatus(n) {
@@ -48,6 +61,7 @@ componentDidMount() {
        const { is_first, progress, state } = this.props;
         return(
      <Div>
+
          <Div align='center'>
              {is_first ? <img weidth={120} style={{ marginTop: 60}} height={120} src={logo} /> : <Avatar size={120} src='https://sun9-9.userapi.com/cBhXydLqUUQkHDWZkxYtVMivVmuxM1IRo5JWkQ/yvpKLp5qKus.jpg'/>}
          </Div>

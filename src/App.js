@@ -23,6 +23,7 @@ import Icon20GlobeOutline from '@vkontakte/icons/dist/20/globe_outline';
 import Icon28NarrativeOutline from '@vkontakte/icons/dist/28/narrative_outline';
 import Icon36Article from '@vkontakte/icons/dist/36/article';
 import Icon28LinkOutline from '@vkontakte/icons/dist/28/link_outline';
+import Icon56RecentOutline from '@vkontakte/icons/dist/56/recent_outline';
 
 
 // panels
@@ -144,6 +145,8 @@ class App extends React.Component {
     my_groups:[],
     history:[{}],
 
+    activeTabSub: 'groups',
+
 
     info_viget:{header: '', caption: ''},
 
@@ -167,7 +170,7 @@ class App extends React.Component {
         this.setState({ is_admin:true})
       }
         this.setState({
-          activeStory:'subscribes',
+          
           appId: parseInt(window.location.href.split("vk_app_id=")[1].split("&")[0], 10),
           user,
           platform:this.props.platform
@@ -181,6 +184,29 @@ class App extends React.Component {
         this.setState({ data:data.data})
         await this.sortData(data.data)
       })
+
+
+      let h = new Date().getHours()
+      if(h >=  0 && h < 6) {
+          if(this.state.theme == 'bright_light') {
+              this.openModal('dark');
+          }
+      }
+      else 
+          if(h >=6 && h < 12){
+            
+          }
+              
+          else 
+              if(h >=12 && h < 18) {
+
+              }
+              else {
+                if(this.state.theme == 'bright_light') {
+                  this.openModal('dark');
+                }
+              }
+                  
           
   }
 
@@ -273,28 +299,30 @@ class App extends React.Component {
 
   save_request = () => {  //сохранение подписки
     this.setState({ popout: <ScreenSpinner /> });
-    
-    fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/save-user-api-request", {
-      "headers": {
-        "accept": "*/*",
-        "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
-        "content-type": "application/json;charset=utf-8",
-      },
-      "referrer": "https://appvk.flights.ru/",
-      "referrerPolicy": "no-referrer-when-downgrade",
-      "body": JSON.stringify(this.state.item),
-      "method": "POST",
+    bridge.sendPromise("VKWebAppAllowMessagesFromGroup", {"group_id": 192548341})
+    .then(() => {
+      fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/save-user-api-request", {
+        "headers": {
+          "accept": "*/*",
+          "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+          "content-type": "application/json;charset=utf-8",
+        },
+        "referrer": "https://appvk.flights.ru/",
+        "referrerPolicy": "no-referrer-when-downgrade",
+        "body": JSON.stringify(this.state.item),
+        "method": "POST",
+      })
+      .then(response => response.json())
+      .then(check => {
+        if(check.response === 'ok'){
+          this.setState({ popout: null,countDB:this.state.countDB+1, activeModal: null, activePanel:'home', activeTabSub: 'database'});
+          console.log(check);
+        }
+        }).catch(err => {
+          this.setState({snackbar:<SnackbarError close={() => this.setState({snackbar:null})} />})
+          this.setState({ popout: null });
     })
-    .then(response => response.json())
-    .then(check => {
-      if(check.response === 'ok'){
-        this.setState({ popout: null,countDB:this.state.countDB+1, activeModal: null, activePanel:'home'});
-        console.log(check);
-      }
-    }).catch(err => {
-        this.setState({snackbar:<SnackbarError close={() => this.setState({snackbar:null})} />})
-        this.setState({ popout: null });
-    })
+  })
   }
   
   //редактирование state(Дял формы редактирования и создания подписки на сообщества)
@@ -500,6 +528,21 @@ class App extends React.Component {
               icon={<Avatar size={96} src={this.state.user.photo_200}/>}
               caption={<span>{this.state.user.city && this.state.user.city.title}<br />{"текущий статус - " + this.getStatus(this.state.countDB + this.state.my_groups.length)}<br />Подписки на дешевые авиабилеты<br />Раздел "витрина" - {this.state.my_groups.length}<br />Раздел "Мой выбор" - {this.state.countDB}<br />Всего подписок - {(this.state.countDB + this.state.my_groups.length)}<br /><Link>Подробнее...</Link></span>}
             />
+            <ModalCard 
+              id='dark' 
+              icon={<Icon56RecentOutline />}
+              onClose={() => this.setState({ activeModal: null})}
+              header="Включить темную тему?" 
+              actions={[
+                {
+                 title: 'Включить',
+                  mode: 'primary',
+                  action: () => {
+                    this.setState({ theme: 'space_gray', activeModal: null})
+                 }
+                }
+              ]}
+            />
           </ModalRoot>
         }>
             <Help id='home' 
@@ -690,6 +733,7 @@ class App extends React.Component {
                      header={this.state.user.first_name + " " + this.state.user.last_name} />
           <ModalCard id='qr' onClose={() => this.setState({ activeModal: null})} icon={<QR state={this.state}/>} />
             
+
           <ModalPage id='menu_map' onClose={() => this.setState({ activeModal: null})} settlingHeight={100} header={<ModalPageHeader>Карта полетов</ModalPageHeader>}>
             <List>
         <SimpleCell before={<Icon28MenuOutline />}  target='_blank' href='https://vk.com/page-192548341_54391753'>

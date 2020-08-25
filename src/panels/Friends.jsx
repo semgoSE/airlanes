@@ -558,7 +558,7 @@ export class Friends extends Component {
               </Button>
             </div>
             <div style={{ paddingBottom:6,paddingRight:32,right:'0%', position:'absolute' }}>
-            <Button className='circle_button' style={{backgroundColor:'#4BBDE7'}} onClick={() => this.props.openModal('menu_map')}>
+            <Button className='circle_button' style={{backgroundColor:'#4BBDE7'}} onClick={() => this.props.openModal(activeTab == 'friends_boy' ? 'info_boy' : 'info_girl')}>
               <Icon36Article height={28} width={28}/>
             </Button>
             </div>
@@ -584,8 +584,8 @@ export class Friends extends Component {
                         text={friend.status}
                         actions={
                           <React.Fragment>
-                            <Button target='_blank' href={"https://vk.com/"+friend.domain}>Профиль</Button>
-                            <Button mode="secondary" onClick={() => this.open(friend)}>Календарь низких цен</Button>
+                            <Button target='_blank' href={"https://vk.com/"+friend.domain}>Перейти в профиль</Button>
+                            <Button  onClick={() => this.open(friend)}>Календарь низких цен</Button>
                           </React.Fragment>
                         }
                         caption={friend.city == null || friend.country == null ? '??':<span>{friend.country.title+", "+friend.city.title}<br /> {"День рождения "+this.date(friend.bdate)}</span>}
@@ -609,8 +609,8 @@ export class Friends extends Component {
                       after={friend.online == 1  ? <span style={{ color: 'var(--dynamic_green)', fontSize:12 }}>online</span> : (friend.last_seen ? <span style={{ fontSize: 12, color:'var(--dynamic_gray)'}}>{new Date(friend.last_seen.time*1000).toLocaleString('ru', {  year: 'numeric', month: 'numeric',day: 'numeric', hour: 'numeric',minute: 'numeric'})}</span>: <span style={{ color: 'var(--dynamic_gray)', fontSize:12}}>offline</span>)}
                       actions={
                         <React.Fragment>
-                          <Button target='_blank' href={"https://vk.com/"+friend.domain}>Профиль</Button>
-                          <Button mode="secondary" onClick={() => this.open(friend)}>Календарь низких цен</Button>
+                          <Button target='_blank' href={"https://vk.com/"+friend.domain}>Перейти в профиль</Button>
+                          <Button onClick={() => this.open(friend)}>Календарь низких цен</Button>
                         </React.Fragment>
                       }
                     >
@@ -645,8 +645,8 @@ export class Friends extends Component {
                         after={friend.online == 1  ? <span style={{ color: 'var(--dynamic_green)', fontSize:12 }}>online</span> : (friend.last_seen ? <span style={{ fontSize: 12, color:'var(--dynamic_gray)'}}>{new Date(friend.last_seen.time*1000).toLocaleString('ru', {  year: 'numeric', month: 'numeric',day: 'numeric', hour: 'numeric',minute: 'numeric'})}</span>: <span style={{ color: 'var(--dynamic_gray)', fontSize:12}}>offline</span>)}
                         actions={
                           <React.Fragment>
-                            <Button target='_blank' href={"https://vk.com/"+friend.domain}>Профиль</Button>
-                            <Button mode="secondary" onClick={() => this.open(friend)}>Календарь низких цен</Button>
+                            <Button target='_blank' href={"https://vk.com/"+friend.domain}>Перейти в профиль</Button>
+                            <Button onClick={() => this.open(friend)}>Календарь низких цен</Button>
                           </React.Fragment>
                         }
                       >
@@ -668,8 +668,8 @@ export class Friends extends Component {
                     after={friend.online == 1  ? <span style={{ color: 'var(--dynamic_green)', fontSize:12 }}>online</span> : (friend.last_seen ? <span style={{ fontSize: 12, color:'var(--dynamic_gray)'}}>{new Date(friend.last_seen.time*1000).toLocaleString('ru', {  year: 'numeric', month: 'numeric',day: 'numeric', hour: 'numeric',minute: 'numeric'})}</span>: <span style={{ color: 'var(--dynamic_gray)', fontSize:12}}>offline</span>)}
                     actions={
                       <React.Fragment>
-                        <Button target='_blank' href={"https://vk.com/"+friend.domain}>Профиль</Button>
-                        <Button mode="secondary" onClick={() => this.open(friend)}>Календарь низких цен</Button>
+                        <Button target='_blank' href={"https://vk.com/"+friend.domain}>Перейти в профиль</Button>
+                        <Button  onClick={() => this.open(friend)}>Календарь низких цен</Button>
                       </React.Fragment>
                     }
                   >

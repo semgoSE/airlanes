@@ -254,7 +254,7 @@ export class Settings extends Component {
           ['dst.name']:dst_name,
           ['Discount']:{ ['$gte']:profitability},
           ['SrcDayOfWeek']:{['$in']:days.map((item, i) => { if(item == true) return i})},
-          ['Dst.CountryCode']:(countryDst == 'all' ? null : countryDst),
+          ['Dst.CountryCode']:(countryDst == 'all' ? undefined : countryDst),
           ['Price']:{['$gte']:costMin, ['$lte']:costMax},
           ['Temp.Max']:{['$gte']:dayTempMin, ['$lte']:dayTempMax},
           ['Temp.Min']:{['$gte']:nighTempMin, ['$lte']:nighTempMax},
@@ -270,6 +270,7 @@ export class Settings extends Component {
           content
         }
         //this.save_request(obj);
+        console.log(obj)
         this.props.onChangeGroups('item', obj);
         this.props.openModal('confirm_settings');
         this.props.setPopout(null);

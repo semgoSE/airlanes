@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Tabs, Panel, TabsItem, PanelHeader, Div, Button, FixedLayout, ActionSheetItem, ActionSheet, Header} from '@vkontakte/vkui';
+import { Tabs, Panel, TabsItem, PanelHeader, Div, Button, FixedLayout, ActionSheetItem, ActionSheet, Header, Title} from '@vkontakte/vkui';
 import Viget from '../components/Viget';
 import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
 import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
@@ -30,8 +30,7 @@ export default class Aviasales extends Component {
             <ActionSheetItem autoclose before={<Icon28SearchOutline />} onClick={() => this.setState({ activeMeta: 'aviasales' })}>aviasales.ru </ActionSheetItem>
             <ActionSheetItem autoclose before={<Icon28SearchOutline />} onClick={() => this.setState({ activeMeta:'trip'})}>trip.com</ActionSheetItem>
             <ActionSheetItem autoclose before={<Icon28SearchOutline />} onClick={() => this.setState({ activeMeta:'ozon'})}>ozon.travel</ActionSheetItem>
-            <ActionSheetItem autoclose before={<Icon28SearchOutline />} onClick={() => this.setState({ activeMeta:'skyscanner'})}>skyscanner.com</ActionSheetItem>
-            <ActionSheetItem autoclose before={<Icon28SearchOutline />} onClick={() => this.setState({ activeMeta:'aviakassa'})}>aviakassa.com</ActionSheetItem>
+            <ActionSheetItem autoclose before={<Icon28SearchOutline />} onClick={() => this.setState({ activeMeta:'CheapOair'})}>сheapOair</ActionSheetItem>
         </ActionSheet>
         )
     }
@@ -60,46 +59,69 @@ export default class Aviasales extends Component {
 
                 {activeTab == 'avia' && activeMeta == 'aviasales' &&
                 <div>
-                <Header>aviasales.ru</Header>
+                <Div>
+                <Title weight='heavy' level='2'>aviasales.ru</Title>
+                </Div>
                 <iframe width="100%" height={window.screen.height} frameBorder="0" src="https://www.travelpayouts.com/widgets/a92ec352ec5c4a659f1ad07c4bf65d99.html?v=2055"></iframe>
+                </div>
+                }
+                {activeTab == 'avia' && activeMeta == 'trip' &&
+                <div>
+                <Div>
+                <Title weight='heavy' level='2'>trip.com</Title>
+                </Div>
+                <Viget url={`https://tp.media/content?promo_id=4132&shmarker=${state.marker}&campaign_id=121&locale=ru&powered_by=false&border_radius=20&plain=true&color_button=%232681ff&color_button_text=%23ffffff&color_border=%232681ff`}/>
                 </div>
                 }
                 {activeTab == 'avia' && activeMeta == 'ozon' && 
                 <div>
-                <Header>ozon.travel</Header>
+                <Div>
+                <Title weight='heavy' level='2'>ozon.travel</Title>
+                </Div>
                 <iframe width="100%" scrolling="no" height="500" frameBorder="0" src={`https://partners.ozon.travel/searchform_v2_0/?forpartner=${state.marker_ozon}&forPartnerRef=vkappui&formOrientation=vertical&tab=avia&tab=railway&tab=insurance&type=avia&bkgrnd_preset=//www.ozon.travel/f/images/index_form_bg.png&bkgrnd=ffffff&color_form=FFFFFF&color_formborder=ffffff&color_blocks=ffffff&color_fields=ffffff&color_button=ff56ff&color_border=ffffff&tab_text_color=757575&active_tab_text_color=494949&inputs_text_color=000000&labels_text_color=757575&button_text_color=ffffff&defaultAvia=`}></iframe>
                 </div>
                 }
-                {activeTab == 'avia' && activeMeta == 'aviakassa' && 
+                {activeTab == 'avia' && activeMeta == 'CheapOair' && 
                 <div>
-                <Header>aviakassa.com</Header>
-                <Viget url={'https://widgets.aviakassa.com/partner.js'}/>
+                <Div>
+                <Title weight='heavy' level='2'>сheapOair</Title>
+                </Div>
+
+                <Viget url={`https://c146.travelpayouts.com/content?promo_id=4428&shmarker=${state.marker}&width=400&height=535s`}/>
                 </div>
                 }
                 {activeTab == 'viget' && activeViget == 'calendar' &&   
                 <div>
-                <Header>Календарь низких цен</Header>
+                <Div>
+                <Title weight='heavy' level='2'>Календарь низких цен</Title>
+                </Div>
                 <Viget url={`https://www.travelpayouts.com/calendar_widget/iframe.js?destination=BKK&marker=${state.marker}&searchUrl=hydra.aviasales.ru&locale=ru&currency=usd&powered_by=true&one_way=false&only_direct=false&period=year&range=7%2C14`}/>
                 </div>
                 }
 
                 {activeTab == 'viget' && activeViget == 'pop_avisales' && 
                 <div>
-                <Header>Спецпредложения авиакомпаний</Header>
+                <Div>
+                <Title weight='heavy' level='2'>Спецпредложения авиакомпаний</Title>
+                </Div>
                  <Viget url={`https://www.travelpayouts.com/ducklett/scripts.js?v=1&marker=122890&widget_type=brickwork&host=hydra.aviasales.ru&locale=ru&currency=rub&limit=9&powered_by=true`} />
                 </div>
                 }
 
                 {activeTab == 'viget' && activeViget == 'pop' && 
                 <div>
-                <Header>Популярные направления</Header>
+                <Div>
+                <Title weight='heavy' level='2'>Популярные направления</Title>
+                </Div>
                 <Viget url={`https://www.travelpayouts.com/weedle/widget.js?v=1&marker=${state.marker}&host=hydra.aviasales.ru&locale=ru&currency=usd&powered_by=true`} />
                 </div>
                 }
 
                 {activeTab == 'viget' && activeViget == '100' && 
                 <div>
-                    <Header>100 дешевых авиабилетов</Header>
+                <Div>
+                <Title weight='heavy' level='2'>100 дешевых авиабилетов</Title>
+                </Div>
                 <iframe width='100%' height={570} src='https://top100.aviasales.ru/MOW?_ga=2.230093269.899426115.1587444996-1554969250.1586643377&utm_campaign=as_marketing_top100&utm_medium=aviasales&utm_source=latest_prices'></iframe>
                 </div>
                 }

@@ -54,3 +54,8 @@
     margin:0;
     background:#0E62F1
 }
+
+.des {
+    padding:12px;
+    display:none;
+}

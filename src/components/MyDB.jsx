@@ -2,6 +2,8 @@ import React, { Component } from 'react'
 import SnackbarError from './SnackbarError';
 import { Group, ScreenSpinner, CardGrid, Card, Div, Button, Alert, Placeholder, List, PromoBanner, PullToRefresh, Link, Title, SimpleCell, Text } from '@vkontakte/vkui'
 
+import booking from '../img/booking.png';
+
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28DeleteOutlineAndroid from '@vkontakte/icons/dist/28/delete_outline_android';
 import Icon28ChevronDownOutline from '@vkontakte/icons/dist/28/chevron_down_outline';
@@ -88,7 +90,7 @@ const bannerData = {
   trackingLink: 'https://www.booking.com?aid=1540284',
   ctaText: 'Перейти',
   advertisingLabel: 'Реклама',
-  iconLink: 'https://sun1-47.userapi.com/P1jAb4KW7BOK-5xIfqOKAL3x6NNQ2mf6ZHXy4w/vntodFgpcpg.jpg',
+  iconLink: booking,
   description: 'Бронирование отелей',
   statistics: [
     { url: '', type: 'playbackStarted' },

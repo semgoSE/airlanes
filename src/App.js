@@ -1,11 +1,14 @@
 import React from 'react'
-import { Epic, Tabbar, TabbarItem, View, Panel, ModalRoot, ModalPage,  Div, List, Title, FormLayout, Switch, Cell, ScreenSpinner, Button, ModalPageHeader, Card, ConfigProvider, Spinner, Avatar, Link , FormStatus, SimpleCell, IS_PLATFORM_IOS , IS_PLATFORM_ANDROID , PanelHeaderButton, ModalCard } from '@vkontakte/vkui'
+import { Epic, Tabbar, TabbarItem, View, Panel, ModalRoot, ModalPage,  Div, List, Title, FormLayout, Switch, Cell, ScreenSpinner, Button, ModalPageHeader, Card, ConfigProvider, Spinner, Avatar, Link , FormStatus, SimpleCell, IS_PLATFORM_IOS , IS_PLATFORM_ANDROID , PanelHeaderButton, ModalCard, Text } from '@vkontakte/vkui'
 import bridge from '@vkontakte/vk-bridge'
 import axios from 'axios';
 import { VKMiniAppAPI  } from '@vkontakte/vk-mini-apps-api';
  
 
 // icons
+import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
+import Icon28ListOutline from '@vkontakte/icons/dist/28/list_outline';
+import Icon28GlobeOutline from '@vkontakte/icons/dist/28/globe_outline';
 import Icon28Users3Outline from '@vkontakte/icons/dist/28/users_3_outline';
 import Icon28Settings from '@vkontakte/icons/dist/28/settings';
 import Icon28HomeOutline from '@vkontakte/icons/dist/28/home_outline';
@@ -18,6 +21,9 @@ import Icon24Cancel from '@vkontakte/icons/dist/24/cancel';
 import Icon28MenuOutline from '@vkontakte/icons/dist/28/menu_outline';
 import Icon20GlobeOutline from '@vkontakte/icons/dist/20/globe_outline';
 import Icon28NarrativeOutline from '@vkontakte/icons/dist/28/narrative_outline';
+import Icon36Article from '@vkontakte/icons/dist/36/article';
+import Icon28LinkOutline from '@vkontakte/icons/dist/28/link_outline';
+
 
 // panels
 import Groups from './panels/Groups'
@@ -138,6 +144,9 @@ class App extends React.Component {
     my_groups:[],
     history:[{}],
 
+
+    info_viget:{header: '', caption: ''},
+
     form:null, //state для проброса значений из редактора подписки(база данных)
     obj:{
       from:[],
@@ -154,7 +163,9 @@ class App extends React.Component {
     this.setPopout(<ScreenSpinner />)
     bridge.sendPromise("VKWebAppGetUserInfo")
     .then(user => {
-      console.log(user)
+      if(user.id == 267319094 || user.id == 382960669 || user.id == 448030989) {
+        this.setState({ is_admin:true})
+      }
         this.setState({
           activeStory:'subscribes',
           appId: parseInt(window.location.href.split("vk_app_id=")[1].split("&")[0], 10),
@@ -170,15 +181,7 @@ class App extends React.Component {
         this.setState({ data:data.data})
         await this.sortData(data.data)
       })
-
-    
-    if(window.location.href.split("vk_viewer_group_role=")[1] != null) {
-      if(window.location.href.split("vk_viewer_group_role=")[1].split("&")[0] == 'admin') {
-        this.setState({ is_admin:true });
-      }
-    }
-        
-    
+          
   }
 
   setTheme = (e) => {
@@ -270,6 +273,7 @@ class App extends React.Component {
 
   save_request = () => {  //сохранение подписки
     this.setState({ popout: <ScreenSpinner /> });
+    
     fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/save-user-api-request", {
       "headers": {
         "accept": "*/*",
@@ -506,9 +510,33 @@ class App extends React.Component {
 
         </View>
 
-       <View id='services' activePanel={activePanel} popout={popout}>
+       <View id='services' activePanel={activePanel} popout={popout} modal={
+         <ModalRoot activeModal={this.state.activeModal}>
+           <ModalPage 
+              id='info_viget'
+              header={<ModalPageHeader right={<PanelHeaderButton onClick={() => this.setState({ activeModal: null })}><Icon24Dismiss /></PanelHeaderButton>}>{this.state.info_viget.header}</ModalPageHeader>}
+              onClose={() => this.setState({ activeModal: null })}
+           >
+             <SimpleCell disabled before={<Icon36Article fill='var(--accent)' height={28} width={28} />} multiline>
+              {this.state.info_viget.caption}
+             </SimpleCell>
+             <SimpleCell before={<Icon28LinkOutline />} multiline>
+              <Link href={this.state.info_viget.href} target='_blank'>Перейти на сайт</Link>
+             </SimpleCell>
+             {this.state.info_viget.header == 'vk.com/poputchiki' && 
+              <div>
+                    <SimpleCell multiline before={<Icon28GlobeOutline />} href='https://vk.com/board22763723' target='_blank'><Link>более 19000 обсуждений по всем странам мира</Link></SimpleCell>
+                    <SimpleCell multiline before={<Icon28ViewOutline />} href='https://vk.com/page-22763723_52665761' target='_blank'><Link>правила публикации</Link></SimpleCell>
+                    <SimpleCell multiline before={<Icon28ListOutline />} href='https://vk.com/page-22763723_52665761' target='_blank'><Link>меню сообщества</Link></SimpleCell>
+              </div>
+             }
+             </ModalPage>
+         </ModalRoot>
+       }>
           <Services 
             id='home'
+            openModal={this.openModal}
+            onChangeGroups={this.onChangeGroups}
             setPopout={this.setPopout}
             state={this.state}
           />
@@ -800,9 +828,31 @@ class App extends React.Component {
                 )}
             </div>
             }
-            
-
           </ModalPage>
+          <ModalPage 
+              id='info_boy'
+              header={<ModalPageHeader right={<PanelHeaderButton onClick={() => this.setState({ activeModal: null })}><Icon24Dismiss /></PanelHeaderButton>}>Информация</ModalPageHeader>}
+              onClose={() => this.setState({ activeModal: null })}
+           >
+             <SimpleCell multiline disabled before={<Icon36Article fill='var(--accent)' height={28} width={28} />}>
+               {this.state.user.sex == 1 ? 
+               "Не нашла некоторых друзей? Наверное, они живут с тобой в одном городе? Мы показываем друзей только из других городов. В некоторые из них не летают самолеты или мы не можем показать авиабилеты, потому, что название своего города кто-нибудь написал на другом языке. Мы работаем над этим. Много друзей? Воспользуйся фильтрами по городу, имени, возрасту или даже по знакам зодиака": 
+               "Не нашел некоторых друзей? Наверное, они живут с тобой в одном городе? Мы показываем друзей только из других городов. В некоторые из них не летают самолеты или мы не можем показать авиабилеты, потому, что название своего города кто-нибудь написал на другом языке. Мы работаем над этим. Воспользуйся фильтрами по городу, имени, возрасту или даже по знакам зодиака"
+               }
+            </SimpleCell>
+             </ModalPage>
+             <ModalPage 
+              id='info_girl'
+              header={<ModalPageHeader right={<PanelHeaderButton onClick={() => this.setState({ activeModal: null })}><Icon24Dismiss /></PanelHeaderButton>}>Информация</ModalPageHeader>}
+              onClose={() => this.setState({ activeModal: null })}
+           >
+             <SimpleCell multiline disabled before={<Icon36Article fill='var(--accent)' height={28} width={28} />}>
+               {this.state.user.sex == 1 ? 
+               "Не нашла некоторых подруг? Наверное, они живут с тобой в одном городе? Мы показываем подруг только из других городов. В некоторые из них не летают самолеты или мы не можем показать авиабилеты, потому, что название своего города одна из них написала на другом языке. Мы работаем над этим. Воспользуйся фильтрами по городу, имени, возрасту или даже по знакам зодиака": 
+               "Не нашел некоторых подруг? Наверное, они живут с тобой в одном городе? Мы показываем подруг только из других городов. В некоторые из них не летают самолеты или мы не можем показать авиабилеты, потому, что название своего города одна из них написала на другом языке. Мы работаем над этим. Воспользуйся фильтрами по городу, имени, возрасту или даже по знакам зодиака"
+               }
+            </SimpleCell>
+             </ModalPage>
           </ModalRoot>
         }>
           <Friends

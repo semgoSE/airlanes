@@ -7,71 +7,36 @@ import Icon28UserOutline from '@vkontakte/icons/dist/28/user_outline';
 import Icon28HelpOutline from '@vkontakte/icons/dist/28/help_outline';
 import Icon28UserCircleOutline from '@vkontakte/icons/dist/28/user_circle_outline';
 
+
+import How_Work from '../components/How_Work';
+import Missia from '../components/Missia';
+import Programm from '../components/Programm';
+import Vitr from '../components/Vitr';
+import My_vybor from '../components/My_vybor';
+import Market from '../components/Market';
+import Friends_help from '../components/Friends_help';
+
 export default class Help extends Component {
     state = {
         activeTab: 'about'
     }
 
-    openMenuAbout() {
-        this.props.setPopout(      
-        <ActionSheet onClose={() => this.props.setPopout(null)}>
-        <ActionSheetItem autoclose>
-          Позиция 1 
-        </ActionSheetItem>
-        <ActionSheetItem autoclose>
-          Позиция 2 
-        </ActionSheetItem>
-        <ActionSheetItem autoclose>
-          Позиция 3 
-        </ActionSheetItem>
-      </ActionSheet>
-      )
-    }
-
     openMenu = () => {
         this.props.setPopout(
         <ActionSheet onClose={() => this.props.setPopout(null)}>
-            <ActionSheetItem autoclose  onClick={() => this.setState({ activeTab: 'about'})}>Как это работает?</ActionSheetItem>
-            <ActionSheetItem autoclose  onClick={() => this.setState({ activeTab: 'mis'})}>Миссия</ActionSheetItem>
-            <ActionSheetItem autoclose  onClick={() => this.setState({ activeTab: 'market' })}>Гипермаркет "Дешевые авиабилеты"</ActionSheetItem>
-            <ActionSheetItem autoclose onClick={() => this.setState({ activeTab: 'vitr' })}>Раздел "Витрина"</ActionSheetItem>
-            <ActionSheetItem autoclose onClick={() => this.setState({ activeTab: 'my_vybor' })}>Раздел "Мой выбор"</ActionSheetItem>
-            <ActionSheetItem autoclose onClick={() => this.setState({ activeTab: 'unic' })}>Уникальность</ActionSheetItem>
-            <ActionSheetItem autoclose onClick={() => this.setState({ activeTab: 'friends' })}>Навестить друзей?</ActionSheetItem>
-            <ActionSheetItem autoclose onClick={() => this.setState({ activeTab: 'service' })}>Сервисы</ActionSheetItem>
-            <ActionSheetItem autoclose onClick={() => this.setState({ activeTab: 'cashback' })}>Кэшбэк </ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />} autoclose  onClick={() => this.setState({ activeTab: 'about'})}>Как это работает?</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose  onClick={() => this.setState({ activeTab: 'mis'})}>Миссия</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose  onClick={() => this.setState({ activeTab: 'market' })}>Гипермаркет "Дешевые авиабилеты"</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose onClick={() => this.setState({ activeTab: 'vitr' })}>Раздел "Витрина"</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose onClick={() => this.setState({ activeTab: 'my_vybor' })}>Раздел "Мой выбор"</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose onClick={() => this.setState({ activeTab: 'unic' })}>Программа лояльности</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose onClick={() => this.setState({ activeTab: 'friends' })}>Навестить друзей?</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose onClick={() => this.setState({ activeTab: 'service' })}>Сервисы</ActionSheetItem>
+            <ActionSheetItem before={<Icon28ViewOutline />}  autoclose onClick={() => this.setState({ activeTab: 'cashback' })}>Кэшбэк </ActionSheetItem>
         </ActionSheet>    
         )
     }
 
-    openMenuTheme() {
-        this.props.setPopout(
-            <ActionSheet onClose={() => this.props.setPopout(null)}>
-                <ActionSheetItem autoclose >
-                Светлая
-                </ActionSheetItem>
-                <ActionSheetItem autoclose onClick={() => this.props.onChangeGroups('theme','')}>
-                Темная
-                </ActionSheetItem>
-            </ActionSheet>
-        )
-    }
-
-    openMenuCashback() {
-        this.props.setPopout(      
-            <ActionSheet onClose={() => this.props.setPopout(null)}>
-            <ActionSheetItem autoclose>
-                Ссылка 1 
-            </ActionSheetItem>
-            <ActionSheetItem autoclose>
-                Ссылка 2 
-            </ActionSheetItem>
-            <ActionSheetItem autoclose>
-                Ссылка 3 
-            </ActionSheetItem>
-          </ActionSheet>
-          )
-    }
 
     openMenuUser() {
         this.props.setPopout(     
@@ -94,7 +59,7 @@ export default class Help extends Component {
         const { id } = this.props;
         return (
             <Panel id={id}>
-                <PanelHeader separator={false}>Помощь</PanelHeader>
+                <PanelHeader>Помощь</PanelHeader>
                 {activeTab === 'cashback' && 
                     <div>
                         <FormLayout>
@@ -104,8 +69,13 @@ export default class Help extends Component {
                         </FormLayout>
                     </div>
                 }
-
-
+                {activeTab == 'about' && <How_Work sex={this.props.state.user.sex}/>}
+                {activeTab == 'mis' && <Missia sex={this.props.state.user.sex} />}
+                {activeTab == 'unic' && <Programm sex={this.props.state.user.sex} />}
+                {activeTab == 'vitr' && <Vitr sex={this.props.state.user.sex} />}
+                {activeTab == 'my_vybor' && <My_vybor sex={this.props.state.user.sex} />}
+                {activeTab == 'market' && <Market sex={this.props.state.user.sex} />}
+                {activeTab == 'friends' && <Friends_help sex={this.props.state.user.sex} />}
 
 
                 <FixedLayout vertical='bottom'>
@@ -122,6 +92,8 @@ export default class Help extends Component {
                     </div>
                     </div>
                 </FixedLayout>
+                <Div />
+                <Div />
             </Panel>
         )
     }

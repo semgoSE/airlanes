@@ -2,30 +2,34 @@ import React, { Component } from 'react'
 import logo from '../img/logo.png';
 import loadSound from './load.mp3';
 import {Howl, Howler} from 'howler';
-import { Panel, Avatar, Div, Progress, Spinner, FixedLayout, InfoRow, Button } from '@vkontakte/vkui';
+import { Panel, Avatar, Div, Progress, Spinner, FixedLayout, InfoRow, Button, Snackbar } from '@vkontakte/vkui';
 
 
 export default class Load extends Component {
 
 state = {
-    welcome: '' 
+    welcome: '', 
+    snackbar:null,
 }
 
 componentDidMount() {
+    const { is_first, progress, state } = this.props;
     let sound = new Howl({
         src: [loadSound],
-        autoplay: true,
-        volume: 0.4,
-        onend: function() {
-         console.log('ff');
-        }
+        volume: 0.05
       });
       sound.once('load', function(){
-        sound.play();
+        if(is_first) {
+            sound.play();
+        }
       });
     let h = new Date().getHours()
-    if(h >=  0 && h < 6)
+    if(h >=  0 && h < 6) {
         this.setState({ welcome: 'Доброй ночи, ' + this.props.state.user.first_name + '!'})
+        if(this.props.state.theme == 'bright_light') {
+        this.setState( {snackbar:<Snackbar onActionClick={() => this.props.onChangeGroups('theme', 'space_gray')} onClose={() => this.setState({snackbar:null})} action='Включить'>Включить темную тему?</Snackbar> })
+        }
+    }
     else 
         if(h >=6 && h < 12)
             this.setState({ welcome: 'Доброе утро, ' + this.props.state.user.first_name + '!'})
@@ -73,7 +77,7 @@ componentDidMount() {
                     <Progress value={progress} />
                 </FixedLayout>
              
-         
+         {this.state.snackbar}
      </Div>
      )
     }

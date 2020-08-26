@@ -94,7 +94,7 @@ export class MyGroups extends Component {
     this.props.setPopout(<ScreenSpinner />);
       this.state.data[n].data[i].data.forEach(tag => {
         if(tag.body.split('@')[1] == code) {
-          fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/remove-tag", {
+          fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/remove-tags", {
             "headers": {
               "accept": "*/*",
               "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -123,7 +123,7 @@ export class MyGroups extends Component {
   delete = (id, n, i, t) => {
     console.log(i)
     this.props.setPopout(<ScreenSpinner />);
-    fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/remove-tag", {
+    fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/remove-tags", {
       "headers": {
         "accept": "*/*",
         "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
@@ -142,7 +142,7 @@ export class MyGroups extends Component {
           this.state.data[n].data.splice(i, 1)
         }
         this.props.setPopout(null);
-        this.setState({ snackbar: <Snackbar action="Отмена" onClose={() => this.setState({ snackbar: null})}><Text>Подписка удалена.</Text></Snackbar>})
+        this.setState({ snackbar: <Snackbar onClose={() => this.setState({ snackbar: null})}><Text>Подписка удалена</Text></Snackbar>})
       }
     })
   }
@@ -379,15 +379,15 @@ export class MyGroups extends Component {
           <List>
             {
                 data.map((item, n) => 
-                  <div key={n}>
+                  <div key={n} style={{ marginTop:(n == 0 && !this.state.is_market ? 24 : 0) }}>
                     {item.data.map((data, i) =>
                       <div key={item.category}>
                         <SimpleCell 
                           onClick={() => this.setState({ list:{...this.state.list, [data.code]:!this.state.list[data.code]}})}
-                          style={{ fontWeight: 'bold', marginTop:(i == 0 ? 24 : 0)}} 
+                          style={{ fontWeight: 'bold'}} 
                           after={
                              <Icon28ChevronDownOutline fill='#4BBDE7' style={{ transform: `rotate(${this.state.list[data.code] ? '180deg' : '0'})` }} />
-                             }>{item.category + " -  " + data.group}
+                             }><Title weight='heavy' level='3'>{item.category + " -  " + data.group}</Title>
                         </SimpleCell>
 
                         {this.state.list[data.code] && <div>

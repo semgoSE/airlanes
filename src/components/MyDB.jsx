@@ -389,7 +389,9 @@ export class MyDB extends Component {
             <List>
              {data.map((item, index) =>
               <div>
-              <SimpleCell onClick={() => this.setState({ list: {...this.state.list, [item.id]:!this.state.list[item.id]}})} style={{ fontWeight:'bold', marginTop:(index == 0 ? 24 : 0)}} after={<Icon28ChevronDownOutline fill='#4BBDE7' style={{ transform: `rotate(${this.state.list[item.id] ? '180deg' : '0'})` }} />}>{CONTINENTS[JSON.parse(item.output).continentDst] + (JSON.parse(item.output).countryDst ? " - " + JSON.parse(item.output).countryDst : '') + (JSON.parse(item.output).cityDst ? " - " + JSON.parse(item.output).cityDst : '')}</SimpleCell>
+              <SimpleCell onClick={() => this.setState({ list: {...this.state.list, [item.id]:!this.state.list[item.id]}})} style={{ fontWeight:'bold',  marginTop:(index == 0 && !this.state.is_market ? 24 : 0)}} after={<Icon28ChevronDownOutline fill='#4BBDE7' style={{ transform: `rotate(${this.state.list[item.id] ? '180deg' : '0'})` }} />}>
+                <Title weight='heavy' level='3'>{CONTINENTS[JSON.parse(item.output).continentDst] + (JSON.parse(item.output).countryDst ? " - " + JSON.parse(item.output).countryDst : '') + (JSON.parse(item.output).cityDst ? " - " + JSON.parse(item.output).cityDst : '')}</Title>
+              </SimpleCell>
               {this.state.list[item.id] && 
               <div>
                 <SimpleCell>

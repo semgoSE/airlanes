@@ -249,7 +249,7 @@ export default class MySubs extends Component {
         </FixedLayout>
         }
         <Div />
-        {progress !== 100 ? <Load progress={progress} is_first={this.props.state.is_first} state={this.props.state} openModal={this.props.openModal} user={this.props.state.user}/> :
+        {progress !== 100 ? <Load progress={progress} is_first={this.props.state.is_first} onChangeGroups={this.props.onChangeGroups} state={this.props.state} openModal={this.props.openModal} user={this.props.state.user}/> :
         <div>
           {this.state.is_open ? 
         <div>

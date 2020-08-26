@@ -41,7 +41,6 @@ import Settings from './panels/Settings'
 import EditSettings from './panels/EditSettings';
 import Admin from './panels/Admin';
 import QR from './components/QR';
-import ChooseCountryByContinent from './components/ChooseCountryByContinent';
 import SnackbarError from './components/SnackbarError';
 
 const api  = new VKMiniAppAPI();
@@ -170,7 +169,7 @@ class App extends React.Component {
         this.setState({ is_admin:true})
       }
         this.setState({
-          
+          activeStory:'subscribes',
           appId: parseInt(window.location.href.split("vk_app_id=")[1].split("&")[0], 10),
           user,
           platform:this.props.platform
@@ -185,27 +184,6 @@ class App extends React.Component {
         await this.sortData(data.data)
       })
 
-
-      let h = new Date().getHours()
-      if(h >=  0 && h < 6) {
-          if(this.state.theme == 'bright_light') {
-              this.openModal('dark');
-          }
-      }
-      else 
-          if(h >=6 && h < 12){
-            
-          }
-              
-          else 
-              if(h >=12 && h < 18) {
-
-              }
-              else {
-                if(this.state.theme == 'bright_light') {
-                  this.openModal('dark');
-                }
-              }
                   
           
   }
@@ -526,7 +504,7 @@ class App extends React.Component {
               onClose={() => this.setState({ activeModal: null })}
               header={this.state.user.first_name + " " + this.state.user.last_name}
               icon={<Avatar size={96} src={this.state.user.photo_200}/>}
-              caption={<span>{this.state.user.city && this.state.user.city.title}<br />{"текущий статус - " + this.getStatus(this.state.countDB + this.state.my_groups.length)}<br />Подписки на дешевые авиабилеты<br />Раздел "витрина" - {this.state.my_groups.length}<br />Раздел "Мой выбор" - {this.state.countDB}<br />Всего подписок - {(this.state.countDB + this.state.my_groups.length)}<br /><Link>Подробнее...</Link></span>}
+              caption={<span>{this.state.user.city && this.state.user.city.title}<br />{"текущий статус - " + this.getStatus(this.state.countDB + this.state.my_groups.length)}<br />Подписки на дешевые авиабилеты<br />Раздел "витрина" - {this.state.my_groups.length}<br />Раздел "Мой выбор" - {this.state.countDB}<br />Всего подписок - {(this.state.countDB + this.state.my_groups.length)}</span>}
             />
             <ModalCard 
               id='dark' 

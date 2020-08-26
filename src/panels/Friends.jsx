@@ -129,6 +129,7 @@ export class Friends extends Component {
         <ActionSheetItem autoclose before={<Icon28ListOutline />} onClick={() => {this.sortDate(this.state[g]); this.setState({activeFilter:0, [name]:'birthday'})}}>по дням рождения</ActionSheetItem>
         <ActionSheetItem autoclose before={<Icon28ListOutline />} onClick={() => {this.sortDate(this.state[g]); this.setState({activeFilter:0, [name]:'zodiac'})}}>по знакам зодиака</ActionSheetItem>
         <ActionSheetItem autoclose before={<Icon28ListOutline />} onClick={() => {this.sortOnline(1); this.setState({activeFilter:0, [name]:'online',[this.state.activeTab]:this.state[g]})}}>сейчас на сайте</ActionSheetItem>
+        <ActionSheetItem autoclose before={<Icon28ViewOutline />} href='https://vk.com/friends?w=calendar' target='_blank'>календарь дней рождений</ActionSheetItem>
       </ActionSheet>
     )
   }

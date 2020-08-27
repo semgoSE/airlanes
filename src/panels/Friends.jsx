@@ -2,6 +2,7 @@ import React, { Component } from 'react'
 import { Panel, PanelHeader, Placeholder, Button, FixedLayout, Avatar, ScreenSpinner, RichCell, Tabs, TabsItem, Div, ActionSheet, ActionSheetItem, List, Group, Header, PanelHeaderContent, PanelHeaderContext, Cell, Search, Tooltip } from '@vkontakte/vkui'
 import Icon56UsersOutline from '@vkontakte/icons/dist/56/users_outline';
 import bridge from '@vkontakte/vk-bridge'
+import {Howl, Howler} from 'howler';
 import { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api'
 import SnackbarError from '../components/SnackbarError';
 
@@ -42,6 +43,7 @@ export class Friends extends Component {
   }
 
   componentDidMount() {
+    Howler.volume(0);
     this.getFriends()
   }
   

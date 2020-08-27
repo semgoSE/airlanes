@@ -6,6 +6,7 @@ import Icon28CancelCircleOutline from '@vkontakte/icons/dist/28/cancel_circle_ou
 import Icon16Add from '@vkontakte/icons/dist/16/add';
 import Icon16Cancel from '@vkontakte/icons/dist/16/cancel';
 import Icon28RecentOutline from '@vkontakte/icons/dist/28/recent_outline';
+import Moy_vybor from '../components/Moy_vybor.mp3'
 
 import SelectSearch from 'react-select-search';
 
@@ -114,6 +115,8 @@ export class Settings extends Component {
 
 
   componentDidMount() {
+    this.props.stop_audio();
+    this.props.on_audio(Moy_vybor);
     this.props.setPopout(<ScreenSpinner />);
     fetch(`https://cors-anywhere.herokuapp.com/https://api.cheapflights.sale/api/Countries`)
     .then(response => response.json())

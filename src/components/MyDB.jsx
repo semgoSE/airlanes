@@ -1,12 +1,15 @@
 import React, { Component } from 'react'
 import SnackbarError from './SnackbarError';
+import {Howl, Howler} from 'howler';
 import { Group, ScreenSpinner, CardGrid, Card, Div, Button, Alert, Placeholder, List, PromoBanner, PullToRefresh, Link, Title, SimpleCell, Text } from '@vkontakte/vkui'
 
 import booking from '../img/booking.png';
+import Moy_vybor from '../components/Moy_vybor.mp3'
 
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28DeleteOutlineAndroid from '@vkontakte/icons/dist/28/delete_outline_android';
 import Icon28ChevronDownOutline from '@vkontakte/icons/dist/28/chevron_down_outline';
+
 
 
 
@@ -110,6 +113,8 @@ export class MyDB extends Component {
 
 
   componentDidMount() {
+    this.props.stop_audio();
+    this.props.on_audio(Moy_vybor)
     let obj = {};
     this.state.data.forEach((el) => {
       obj = { ...obj, [el.id]:false}
@@ -389,8 +394,8 @@ export class MyDB extends Component {
             <List>
              {data.map((item, index) =>
               <div>
-              <SimpleCell onClick={() => this.setState({ list: {...this.state.list, [item.id]:!this.state.list[item.id]}})} style={{ fontWeight:'bold',  marginTop:(index == 0 && !this.state.is_market ? 24 : 0)}} after={<Icon28ChevronDownOutline fill='#4BBDE7' style={{ transform: `rotate(${this.state.list[item.id] ? '180deg' : '0'})` }} />}>
-                <Title weight='heavy' level='3'>{CONTINENTS[JSON.parse(item.output).continentDst] + (JSON.parse(item.output).countryDst ? " - " + JSON.parse(item.output).countryDst : '') + (JSON.parse(item.output).cityDst ? " - " + JSON.parse(item.output).cityDst : '')}</Title>
+              <SimpleCell multiline onClick={() => this.setState({ list: {...this.state.list, [item.id]:!this.state.list[item.id]}})} style={{ fontWeight:'bold',  marginTop:(index == 0 && !this.state.is_market ? 24 : 0)}} after={<Icon28ChevronDownOutline fill='#4BBDE7' style={{ transform: `rotate(${this.state.list[item.id] ? '180deg' : '0'})` }} />}>
+                <Title weight='heavy' level='2'>{CONTINENTS[JSON.parse(item.output).continentDst] + (JSON.parse(item.output).countryDst ? " - " + JSON.parse(item.output).countryDst : '') + (JSON.parse(item.output).cityDst ? " - " + JSON.parse(item.output).cityDst : '')}</Title>
               </SimpleCell>
               {this.state.list[item.id] && 
               <div>

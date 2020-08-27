@@ -2,6 +2,7 @@ import React from 'react'
 import { Epic, Tabbar, TabbarItem, View, Panel, ModalRoot, ModalPage,  Div, List, Title, FormLayout, Switch, Cell, ScreenSpinner, Button, ModalPageHeader, Card, ConfigProvider, Spinner, Avatar, Link , FormStatus, SimpleCell, IS_PLATFORM_IOS , IS_PLATFORM_ANDROID , PanelHeaderButton, ModalCard, Text } from '@vkontakte/vkui'
 import bridge from '@vkontakte/vk-bridge'
 import axios from 'axios';
+import {Howl, Howler} from 'howler';
 import { VKMiniAppAPI  } from '@vkontakte/vk-mini-apps-api';
  
 
@@ -121,6 +122,8 @@ const LANGUAGES = {
 //https://appvk.flights.ru/?vk_access_token_settings=groups&vk_app_id=7453233&vk_are_notifications_enabled=0&vk_group_id=194458223&vk_is_app_user=1&vk_is_favorite=0&vk_language=ru&vk_platform=desktop_web&vk_ref=other&vk_user_id=267319094&vk_viewer_group_role=admin&sign=47OlYAJq9Er-BJcvHTQ9RIlZkCGgh9d36tj519NRcGU
 
 class App extends React.Component {
+  audio = null;
+
   state = {
     activeStory: 'about',
     activePanel: 'home',
@@ -143,6 +146,8 @@ class App extends React.Component {
     countDB:0,
     my_groups:[],
     history:[{}],
+
+    go_to_help: null,
 
     activeTabSub: 'groups',
 
@@ -190,6 +195,21 @@ class App extends React.Component {
 
   setTheme = (e) => {
     this.setState({ theme: e.scheme})
+  }
+
+  on_audio = (sound) => {
+    this.audio = new Howl({ 
+      src:[sound],
+      loop: true,
+      volume:0.3,
+      autoplay:true
+    })
+  }
+
+  stop_audio = () => {
+    if(this.audio) {
+      this.audio.stop();
+    }
   }
 
   // Приведение каналов в адекватный вид:
@@ -527,6 +547,7 @@ class App extends React.Component {
                   onChangeGroups={this.onChangeGroups}
                   state={this.state} 
                   openModal={this.openModal}
+                  stop_audio={this.stop_audio}
                   setPopout={this.setPopout}/>
 
         </View>
@@ -556,6 +577,7 @@ class App extends React.Component {
        }>
           <Services 
             id='home'
+            stop_audio={this.stop_audio}
             openModal={this.openModal}
             onChangeGroups={this.onChangeGroups}
             setPopout={this.setPopout}
@@ -768,6 +790,8 @@ class App extends React.Component {
             openModal={this.openModal}
             onChangeGroups={this.onChangeGroups}
             setPopout={this.setPopout}
+            on_audio={this.on_audio}
+            stop_audio={this.stop_audio}
           />
 
           <Settings
@@ -776,6 +800,8 @@ class App extends React.Component {
             setPopout={this.setPopout}
             onChangeGroups={this.onChangeGroups}
             openModal={this.openModal}
+            on_audio={this.on_audio}
+            stop_audio={this.stop_audio}
             go={this.go}
           />
 
@@ -794,6 +820,8 @@ class App extends React.Component {
             setPopout={this.setPopout}
             go={this.go}
             openCatalog={this.openCatalog}
+            on_audio={this.on_audio}
+            stop_audio={this.stop_audio}
           />
           <Catalog
             id="catalog"
@@ -804,6 +832,8 @@ class App extends React.Component {
             goGroup={this.goGroup}
             onChangeGroups={this.onChangeGroups}
             chooseSection={this.chooseSection}
+            on_audio={this.on_audio}
+            stop_audio={this.stop_audio}
           />
           <SectionCatalog
             id="sectionCatalog"
@@ -812,6 +842,8 @@ class App extends React.Component {
             setPopout={this.setPopout}
             openModal={this.openModal}
             onChangeGroups={this.onChangeGroups}
+            on_audio={this.on_audio}
+            stop_audio={this.stop_audio}
             go={this.go}
           />
 
@@ -821,6 +853,8 @@ class App extends React.Component {
             openModal={this.openModal}
             go={this.go}
             setPopout={this.setPopout}
+            on_audio={this.on_audio}
+            stop_audio={this.stop_audio}
             state={this.state}
           />
 
@@ -884,11 +918,12 @@ class App extends React.Component {
             go={this.go}
             openModal={this.openModal}
             onChangeGroups={this.onChangeGroups}
+            stop_audio={this.stop_audio}
           />
  
         </View>
         <View id="aviasales" activePanel={activePanel} popout={popout}>
-          <Aviasales id='home' setPopout={this.setPopout} onChangeGroups={this.onChangeGroups} state={this.state} />
+          <Aviasales id='home' stop_audio={this.stop_audio} setPopout={this.setPopout} onChangeGroups={this.onChangeGroups} state={this.state} />
         </View>
 
         <View id='admin' activePanel={activePanel} popout={popout}>

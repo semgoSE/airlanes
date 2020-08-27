@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Panel, PanelHeader, PanelHeaderBack, RichCell, SimpleCell, Link, Button, Alert, ScreenSpinner, Div, Avatar, Switch, Text } from '@vkontakte/vkui'
+import { Panel, PanelHeader, PanelHeaderBack, RichCell, SimpleCell, Link, Button, Alert, ScreenSpinner, Div, Avatar, Switch, Text, Title } from '@vkontakte/vkui'
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
 import Icon28MailOutline from '@vkontakte/icons/dist/28/mail_outline';
@@ -13,7 +13,7 @@ import SubscribeCities from '../components/SubscribeCities'
 import SnackbarError from '../components/SnackbarError';
 import { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api'
 
-
+import Vitrina from '../components/Vitrina.mp3';
 
 export class Catalog extends Component {
 
@@ -21,6 +21,10 @@ export class Catalog extends Component {
     subscribeGroup: {},
     allowMessages:{},
  
+  }
+
+  componentDidMount() {
+
   }
   // Подписка на сообщество
   subscribe = screenName => {
@@ -427,7 +431,7 @@ export class Catalog extends Component {
                 
                 after={<Switch onChange={(e) => this.openAlert(item, e)} checked={state.my_groups.indexOf(item.code) !== -1 }/>}
               >
-                {item.description}
+                <Title weight='heavy' level='2'>{item.description}</Title>
               </RichCell>
 
               </div>

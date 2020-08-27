@@ -1,5 +1,5 @@
 import React, { Component } from 'react'
-import { Panel, PanelHeader, PanelHeaderBack, Switch, Link, RichCell, Header, ScreenSpinner, Alert, Div, Avatar, Text } from '@vkontakte/vkui'
+import { Panel, PanelHeader, PanelHeaderBack, Switch, Link, RichCell, Header, ScreenSpinner, Alert, Div, Avatar, Text, Title } from '@vkontakte/vkui'
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
 import Icon28MailOutline from '@vkontakte/icons/dist/28/mail_outline';
@@ -11,6 +11,8 @@ import Icon28CheckSquareOutline from '@vkontakte/icons/dist/28/check_square_outl
 import bridge from '@vkontakte/vk-bridge'
 import SubscribeCities from '../components/SubscribeCities'
 import SnackbarError from '../components/SnackbarError';
+
+import Vitrina from '../components/Vitrina.mp3';
 
 export class SectionCatalog extends Component {
 
@@ -71,7 +73,6 @@ export class SectionCatalog extends Component {
     }
   
     componentDidMount() {
-      
       let list = this.props.state.catalog[this.props.state.currentCatalog].to[this.props.state.currentSection].arr.map((item) => item.code).join(',');
       bridge.sendPromise("VKWebAppGetAuthToken", {
         app_id: this.props.state.appId,
@@ -419,7 +420,7 @@ export class SectionCatalog extends Component {
                 
                 after={<Switch onChange={(e) => this.openAlert(item, e)} checked={state.my_groups.indexOf(item.code) !== -1 }/>}
               >
-                {item.description}
+                <Title weight='heavy' level='2'>{item.description}</Title>
               </RichCell>
               )
             )

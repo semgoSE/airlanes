@@ -1,6 +1,7 @@
 import React, { Component } from 'react'
 import { Tabs, Panel, TabsItem, PanelHeader, Div, Button, FixedLayout, ActionSheetItem, ActionSheet, Header, Title} from '@vkontakte/vkui';
 import Viget from '../components/Viget';
+import {Howl, Howler} from 'howler';
 import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
 import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
 import Icon28ChecksOutline from '@vkontakte/icons/dist/28/checks_outline';
@@ -18,6 +19,7 @@ export default class Aviasales extends Component {
     }
 
     componentDidMount() {
+        this.props.stop_audio();
         if(this.props.state.is_meta) {
             this.setState({ activeTab:'avia'});
             this.props.onChangeGroups('is_meta', false)

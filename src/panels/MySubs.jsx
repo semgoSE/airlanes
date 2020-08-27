@@ -5,6 +5,10 @@ import MyDB from '../components/MyDB';
 import Load from '../components/Load';
 import InfoPlaceholder from '../components/InfoPlaceholder';
 import SnackbarError from '../components/SnackbarError';
+import {Howl, Howler} from 'howler';
+
+import Moy_vybor from '../components/Moy_vybor.mp3'
+import Vitrina from '../components/Vitrina.mp3';
 
 import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
 import Icon28Send from '@vkontakte/icons/dist/28/send';
@@ -98,6 +102,8 @@ export default class MySubs extends Component {
     is_open:false,
     groups:[]
   }
+
+  audio = null
 
   //получаем данные подписок
   componentDidMount() {
@@ -217,12 +223,12 @@ export default class MySubs extends Component {
             <TabsItem
               after={this.state.countGroups !== 0 && <Counter>{this.state.countGroups}</Counter>}
               selected={activeTab === 'groups'}
-              onClick={() => {this.setState({ activeTab: 'groups' });}}
+              onClick={() => {this.setState({ activeTab: 'groups' }); this.props.stop_audio(); this.props.on_audio(Vitrina)}}
             >Витрина</TabsItem>
             <TabsItem
               after={this.state.countDB !== 0 && <Counter>{this.state.countDB}</Counter>}
               selected={activeTab === 'database'}
-              onClick={() => {this.setState({ activeTab: 'database' });}}
+              onClick={() => {this.setState({ activeTab: 'database' });this.props.stop_audio(); this.props.on_audio(Moy_vybor) }}
             >Мой выбор</TabsItem>
           </Tabs>
         </FixedLayout>:null
@@ -262,11 +268,15 @@ export default class MySubs extends Component {
               onChangeCount={(name, value) => this.setState({[name]:value})}
               openModal={this.props.openModal}
               groups={this.state.groups}
+              stop_audio={this.props.stop_audio}
+              on_audio={this.props.on_audio}
               state={state}
             />
           :
             <MyDB
               info={this.state}
+              stop_audio={this.props.stop_audio}
+              on_audio={this.props.on_audio}
               onChangeGroups={this.props.onChangeGroups}
               onChangeCount={(name, value) => this.setState({[name]:value})}
               DB={this.state.DB}

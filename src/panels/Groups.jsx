@@ -1,7 +1,17 @@
-import React from 'react'
+import React, {Component} from 'react'
 import { Panel, PanelHeader, List, SimpleCell, PanelSpinner, PanelHeaderBack, Button, FixedLayout } from '@vkontakte/vkui'
 import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
-const Groups = ({ id, state, openCatalog, go }) => (
+import Vitrina from '../components/Vitrina.mp3';
+export default class Groups extends Component {
+
+  componentDidMount() {
+    this.props.stop_audio();
+    this.props.on_audio(Vitrina)
+  }
+
+  render() {
+    const {  id, state, openCatalog, go } = this.props;
+  return(
   <Panel id={id}>
     <PanelHeader left={<PanelHeaderBack onClick={() => go('home')} />}>Сообщества</PanelHeader>
     
@@ -30,5 +40,5 @@ const Groups = ({ id, state, openCatalog, go }) => (
     }
   </Panel>
 )
-
-export default Groups
+  }
+}

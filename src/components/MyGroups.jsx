@@ -7,6 +7,8 @@ import Icon24Settings from '@vkontakte/icons/dist/24/settings';
 import Icon28SettingsOutline from '@vkontakte/icons/dist/28/settings_outline';
 import Icon28ChevronDownOutline from '@vkontakte/icons/dist/28/chevron_down_outline';
 
+import Vitrina from '../components/Vitrina.mp3';
+
 import SnackbarError from './SnackbarError';
 import booking from '../img/booking.png';
 
@@ -36,6 +38,8 @@ export class MyGroups extends Component {
   }
 
   componentDidMount() {
+    this.props.stop_audio();
+    this.props.on_audio(Vitrina);
     console.log(this.props.info)
     let obj = {};
     this.state.data.forEach((el) => {
@@ -383,11 +387,12 @@ export class MyGroups extends Component {
                     {item.data.map((data, i) =>
                       <div key={item.category}>
                         <SimpleCell 
+                          multiline
                           onClick={() => this.setState({ list:{...this.state.list, [data.code]:!this.state.list[data.code]}})}
                           style={{ fontWeight: 'bold'}} 
                           after={
                              <Icon28ChevronDownOutline fill='#4BBDE7' style={{ transform: `rotate(${this.state.list[data.code] ? '180deg' : '0'})` }} />
-                             }><Title weight='heavy' level='3'>{item.category + " -  " + data.group}</Title>
+                             }><Title weight='heavy' level='2'>{item.category + " -  " + data.group}</Title>
                         </SimpleCell>
 
                         {this.state.list[data.code] && <div>

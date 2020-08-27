@@ -16,7 +16,7 @@ componentDidMount() {
     const { is_first, progress, state } = this.props;
     let sound = new Howl({
         src: [loadSound],
-        volume: 0.05
+        volume: 0.3
       });
       sound.once('load', function(){
         if(is_first) {
@@ -26,7 +26,7 @@ componentDidMount() {
     let h = new Date().getHours()
     if(h >=  0 && h < 6) {
         this.setState({ welcome: 'Доброй ночи, ' + this.props.state.user.first_name + '!'})
-        if(this.props.state.theme == 'bright_light') {
+        if(this.props.state.theme == 'bright_light' && this.props.is_first) {
         this.setState( {snackbar:<Snackbar onActionClick={() => this.props.onChangeGroups('theme', 'space_gray')} onClose={() => this.setState({snackbar:null})} action='Включить'>Включить темную тему?</Snackbar> })
         }
     }
@@ -36,8 +36,12 @@ componentDidMount() {
         else 
             if(h >=12 && h < 18)
                 this.setState({ welcome: 'Добрый день, ' + this.props.state.user.first_name + '!'})
-            else 
+            else {
                 this.setState({ welcome: 'Добрый вечер, ' + this.props.state.user.first_name + '!'})
+                if(this.props.state.theme == 'bright_light' && this.props.is_first) {
+                    this.setState( {snackbar:<Snackbar onActionClick={() => this.props.onChangeGroups('theme', 'space_gray')} onClose={() => this.setState({snackbar:null})} action='Включить'>Включить темную тему?</Snackbar> })
+                }
+            }
     setTimeout(() => this.setState({welcome: 'Cегодня ' + new Date().toLocaleString('ru', { day: 'numeric', month: 'long' }) }), 2000)
 }
 

@@ -7,6 +7,7 @@ import Icon28UserOutline from '@vkontakte/icons/dist/28/user_outline';
 import Icon28HelpOutline from '@vkontakte/icons/dist/28/help_outline';
 import Icon28UserCircleOutline from '@vkontakte/icons/dist/28/user_circle_outline';
 
+import {Howl, Howler} from 'howler';
 
 import How_Work from '../components/How_Work';
 import Missia from '../components/Missia';
@@ -15,10 +16,15 @@ import Vitr from '../components/Vitr';
 import My_vybor from '../components/My_vybor';
 import Market from '../components/Market';
 import Friends_help from '../components/Friends_help';
+import Service from '../components/Service';
 
 export default class Help extends Component {
     state = {
         activeTab: 'about'
+    }
+
+    componentDidMount() {
+        this.props.stop_audio();
     }
 
     openMenu = () => {
@@ -76,7 +82,7 @@ export default class Help extends Component {
                 {activeTab == 'my_vybor' && <My_vybor sex={this.props.state.user.sex} />}
                 {activeTab == 'market' && <Market sex={this.props.state.user.sex} />}
                 {activeTab == 'friends' && <Friends_help sex={this.props.state.user.sex} />}
-
+                {activeTab == 'service' && <Service sex={this.props.state.user.sex} />}
 
                 <FixedLayout vertical='bottom'>
                     <div style={{ display:'flex', justifyContent:'center'}}>

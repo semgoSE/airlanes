@@ -9,7 +9,7 @@ import Icon28ListOutline from '@vkontakte/icons/dist/28/list_outline';
 import Icon36Article from '@vkontakte/icons/dist/36/article';
 import Icon28LinkOutline from '@vkontakte/icons/dist/28/link_outline';
 import Icon28GlobeOutline from '@vkontakte/icons/dist/28/globe_outline';
-
+import {Howl, Howler} from 'howler';
 
 import Icon28AddOutline from '@vkontakte/icons/dist/28/add_outline';
 import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
@@ -32,6 +32,7 @@ export default class Services extends Component {
     }
 
     componentDidMount() {
+        this.props.stop_audio();
         fetch("https://cors-anywhere.herokuapp.com/https://api.travelpayouts.com/data/ru/cities.json")
         .then(response => response.json())
         .then(cities => {

@@ -44,7 +44,11 @@ export class Friends extends Component {
 
   componentDidMount() {
     Howler.volume(0);
-    this.getFriends()
+    if(window.location.href.search('friends') !== -1) {
+      console.log(window.location.href.search('friends'))
+      this.getFriends()
+    }
+    
   }
   
   getFriends = () => {
@@ -628,7 +632,7 @@ export class Friends extends Component {
             header="Друзья"
             action={<Button onClick={this.getFriends} size="l">Показать список</Button>}
           >
-            Чтобы получить список к друзьям, вам нужно предоставить доступ приложению.
+            Мы можем показать стоимость авиабилетов к друзьям в других городах в календаре низких цен. Для этого Приложению нужен доступ к списку друзей.
           </Placeholder>}
           </div>
           :

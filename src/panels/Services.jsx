@@ -32,12 +32,20 @@ export default class Services extends Component {
     }
 
     componentDidMount() {
+        const { state } = this.props;
         this.props.stop_audio();
+        if(state.go_to_service_text != null) {
+            this.props.goViget({ name: null})
+            this.setState({ search_text: state.go_to_service_text, search_activeMenu: state.go_to_service_activeMenu, search_viget: state.go_to_service_viget, activeOf: state.go_to_active_Of});
+        }
         fetch("https://cors-anywhere.herokuapp.com/https://api.travelpayouts.com/data/ru/cities.json")
         .then(response => response.json())
         .then(cities => {
-          let myCode = cities.filter((item) => item.name === this.props.state.user.city.title)[0].code;
-          this.setState({ itai : myCode });
+          let myCode = cities.filter((item) => item.name === this.props.state.user.city.title)[0];
+          if(myCode == null) {
+              myCode = { code: 'MOW'}
+          }
+          this.setState({ itai : myCode.code });
         })
     }
 

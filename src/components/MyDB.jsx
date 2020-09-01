@@ -87,19 +87,7 @@ const blue = {
   color:'var(--accent)'
 }
 
-const bannerData = {
-  title: 'Отели, хостелы',
-  domain: 'booking.com',
-  trackingLink: 'https://www.booking.com?aid=1540284',
-  ctaText: 'Перейти',
-  advertisingLabel: 'Реклама',
-  iconLink: booking,
-  description: 'Бронирование отелей',
-  statistics: [
-    { url: '', type: 'playbackStarted' },
-    { url: '', type: 'click' }
-  ]
-};
+
 
 export class MyDB extends Component {
   state = {
@@ -200,7 +188,20 @@ export class MyDB extends Component {
   render() {
     const {
       data
-    } = this.state
+    } = this.state;
+    const bannerData = {
+      title: 'Отели, хостелы',
+      domain: 'booking.com',
+      trackingLink: `https://www.booking.com?aid=${this.props.state.marker_booking}`,
+      ctaText: 'Перейти',
+      advertisingLabel: 'Реклама',
+      iconLink: booking,
+      description: 'Бронирование отелей',
+      statistics: [
+        { url: '', type: 'playbackStarted' },
+        { url: '', type: 'click' }
+      ]
+    };
     return (
       <div>
         {this.state.is_market && <Div style={{ marginTop: 12 }}>

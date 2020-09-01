@@ -107,6 +107,7 @@ export default class MySubs extends Component {
 
   //получаем данные подписок
   componentDidMount() {
+    setTimeout(() => {
     fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/get-tags", {
       "headers": {
         "accept": "*/*",
@@ -164,6 +165,7 @@ export default class MySubs extends Component {
       this.props.setPopout(null)
       this.setState({snackbar:<SnackbarError close={() => this.setState({snackbar:null})}/>, data:'error'})
     })
+  }, 1000)
   }
   //открываем меню 2
   openMenu = () => {

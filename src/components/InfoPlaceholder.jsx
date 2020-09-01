@@ -1,24 +1,54 @@
 import React, { Component } from 'react'
-import { Panel, Avatar, Div, Progress, Spinner, FixedLayout, InfoRow, Link, Title, Text } from '@vkontakte/vkui';
-
+import { Panel, Avatar, Div, Progress, Spinner, FixedLayout, InfoRow, Link, Title, Text, PromoBanner } from '@vkontakte/vkui';
+import booking from '../img/booking.png';
 let is_watch = false;
+
+const bannerData = {
+    title: 'Отели, хостелы',
+    domain: 'booking.com',
+    trackingLink: 'https://www.booking.com?aid=1540284',
+    ctaText: 'Перейти',
+    advertisingLabel: 'Реклама',
+    iconLink: booking,
+    description: 'Бронирование отелей',
+    statistics: [
+      { url: '', type: 'playbackStarted' },
+      { url: '', type: 'click' }
+    ]
+  };
 
 export class InfoPlaceholder extends Component {
     state = {
       snackbar:null,
       data:this.props.DB,
-      is_watch:false
+      is_watch:false,
+      is_market:true,
+      welcome:null,
+    }
+
+    componentDidMount() {
+      let h = new Date().getHours()
+      if(h >=  0 && h < 6) {
+          this.setState({ welcome: 'Доброй ночи, ' + this.props.user.first_name + '!'})
+      }
+      else 
+          if(h >=6 && h < 12)
+              this.setState({ welcome: 'Доброе утро, ' + this.props.user.first_name + '!'})
+          else 
+              if(h >=12 && h < 18)
+                  this.setState({ welcome: 'Добрый день, ' + this.props.user.first_name + '!'})
+              else {
+                  this.setState({ welcome: 'Добрый вечер, ' + this.props.user.first_name + '!'})
+              }
     }
     
 
     render() {
         return (
             <Div>
-            <Div align='center'>
-                <Avatar size={120} style={{ marginTop: 60}} src='https://sun9-9.userapi.com/cBhXydLqUUQkHDWZkxYtVMivVmuxM1IRo5JWkQ/yvpKLp5qKus.jpg'/>
-            </Div>
+
             <Text>
-            <div style={{ textAlign: 'center', marginTop:12}}>Привет, {this.props.user.first_name}!<br /></div>
+            <div style={{ textAlign: 'center'}}>{this.state.welcome}<br /></div>
            <div style={{textAlign: 'justify'}}>
            {this.props.user.sex === 2 ? 
            <div>

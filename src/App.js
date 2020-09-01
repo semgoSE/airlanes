@@ -1,5 +1,5 @@
 import React from 'react'
-import { Epic, Tabbar, TabbarItem, View, Panel, ModalRoot, ModalPage,  Div, List, Title, FormLayout, Switch, Cell, ScreenSpinner, Button, ModalPageHeader, Card, ConfigProvider, Spinner, Avatar, Link , FormStatus, SimpleCell, IS_PLATFORM_IOS , IS_PLATFORM_ANDROID , PanelHeaderButton, ModalCard, Text } from '@vkontakte/vkui'
+import { Epic, Tabbar, TabbarItem, View, Panel, ModalRoot, ModalPage,  Div, List, Title, FormLayout, Switch, Cell, ScreenSpinner, Button, ModalPageHeader, Card, ConfigProvider, Spinner, Avatar, Link , Input, SimpleCell, IS_PLATFORM_IOS , IS_PLATFORM_ANDROID , PanelHeaderButton, ModalCard, Text, Radio, Snackbar, RichCell } from '@vkontakte/vkui'
 import bridge from '@vkontakte/vk-bridge'
 import axios from 'axios';
 import {Howl, Howler} from 'howler';
@@ -125,7 +125,7 @@ class App extends React.Component {
   audio = null;
 
   state = {
-    activeStory: 'about',
+    activeStory: 'subscribes',
     activePanel: 'home',
     theme: 'bright_light',
     activeModal: null,
@@ -135,19 +135,28 @@ class App extends React.Component {
     catalog:null,
     appId: null,
     user:{},
+    type: null,
     marker:122890,
     marker_ozon:'uvw34jlz',
     marker_aviakassa:1543,
+    marker_booking:1540284,
     is_first:true,
     is_admin:false,
     is_meta:false,
     activeTab: 'groups',
     countGroups:null,
-    countDB:0,
+    countDB:10,
     my_groups:[],
     history:[{}],
 
     go_to_help: null,
+
+    go_to_service_activeMenu: null,
+    go_to_service_text: null,
+    go_to_active_Of:0,
+    go_to_service_viget: null,
+
+    snackbar:null,
 
     activeTabSub: 'groups',
 
@@ -167,10 +176,60 @@ class App extends React.Component {
     // Получаем данные о пользователе и каналы
     api.initApp();
     api.onUpdateConfig(this.setTheme)
+    api.onViewHide(() => { Howler.volume(0)});
+    api.onViewRestore(() => { Howler.volume(1)});
     this.setPopout(<ScreenSpinner />)
     bridge.sendPromise("VKWebAppGetUserInfo")
     .then(user => {
-      if(user.id == 267319094 || user.id == 382960669 || user.id == 448030989) {
+      if(window.location.hash) {
+        let id = window.location.hash.split('ref')[1];
+        axios.post('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/user/' + user.id + '/data/sub_user_id', { value: id})
+        .then(response => {
+          axios.get('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/user/' + user.id + '/data?keys=marker,marker_ozon,marker_booking,sub_user_id')
+          .then(data => {
+            let obj  = { marker:122890, marker_booking: 'uvw34jlz', marker_ozon:1540284};
+            if(data.data) {
+              obj = { ...obj, ...data.data}
+              if(obj.sub_user_id) {
+                axios.get('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/user/' + obj.sub_user_id + '/data?keys=marker,marker_ozon,marker_booking')
+                .then(data => {
+                  Object.keys(obj).forEach(key => {
+                    if(obj[key] == null) {
+                      obj[key] = data[key];
+                    } 
+                  })
+                  console.log(obj)
+                  this.setState({ ...obj })
+                })
+              }
+            }
+          })
+      })
+    } else {
+      axios.get('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/user/' + user.id + '/data?keys=marker,marker_ozon,marker_booking,sub_user_id')
+      .then(data => {
+        let obj  = { marker:122890, marker_booking: 'uvw34jlz', marker_ozon:1540284};
+        if(data.data) {
+          obj = { ...obj, ...data.data}
+          if(obj.sub_user_id) {
+            axios.get('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/user/' + obj.sub_user_id + '/data?keys=marker,marker_ozon,marker_booking')
+            .then(data => {
+              Object.keys(obj).forEach(key => {
+                if(obj[key] == null) {
+                  obj[key] = data[key];
+                } 
+              })
+              console.log(obj)
+              this.setState({ ...obj })
+            })
+          }
+        }
+      })
+    }
+
+
+
+      if(user.id == 267319094 || user.id == 382960669 || user.id == 448030989 || user.id == 567797551) {
         this.setState({ is_admin:true})
       }
         this.setState({
@@ -185,16 +244,22 @@ class App extends React.Component {
 
       axios.get("https://cors-anywhere.herokuapp.com/https://api.cheapflights.sale/api/Channels")
       .then(async data => {
+        console.log(this.state)
         this.setState({ data:data.data})
         await this.sortData(data.data)
       })
 
-                  
+            
           
   }
 
   setTheme = (e) => {
+    
     this.setState({ theme: e.scheme})
+  }
+
+  goViget = (e) => {
+    this.setState({ go_to_service_text:e.group, go_to_service_viget:e.viget, go_to_service_activeMenu: e.activeMenu, go_to_active_Of: e.i, activeStory: 'services'})
   }
 
   on_audio = (sound) => {
@@ -276,12 +341,11 @@ class App extends React.Component {
   }
   //открытие модалки
   openModal = modal => {
-    console.log(modal);
+  
     this.setState({activeModal: modal});
   }
  // не используется
   chooseGlobal = ( data) => {
-    console.log(this.state.changeDefaultName, data);
     this.setState({[this.state.changeDefaultName]: data});
   }
 
@@ -314,7 +378,7 @@ class App extends React.Component {
       .then(check => {
         if(check.response === 'ok'){
           this.setState({ popout: null,countDB:this.state.countDB+1, activeModal: null, activePanel:'home', activeTabSub: 'database'});
-          console.log(check);
+        
         }
         }).catch(err => {
           this.setState({snackbar:<SnackbarError close={() => this.setState({snackbar:null})} />})
@@ -325,7 +389,7 @@ class App extends React.Component {
   
   //редактирование state(Дял формы редактирования и создания подписки на сообщества)
   onChangeGroups = (name, obj) => {
-    console.log(obj)
+
    this.setState({ [name]: obj });
   }
 
@@ -430,12 +494,30 @@ class App extends React.Component {
         })
         .then(response => response.json())
         .then(check => {
+          fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/save-groups", {
+            "headers": {
+              "accept": "*/*",
+              "accept-language": "ru-RU,ru;q=0.9,en-US;q=0.8,en;q=0.7",
+              "content-type": "application/json;charset=utf-8",
+            },
+            "referrer": "https://appvk.flights.ru/",
+            "referrerPolicy": "no-referrer-when-downgrade",
+            "body": JSON.stringify({
+              user_id: String(user.id),
+              checkbox: arr,
+              app_id:7529463,
+            }),
+            "method": "POST",
+          })
+          .then(response => response.json())
+          .then(d => {
           if(check.response === 'ok'){
             let arr = this.state.my_groups.push(screenName)
-            console.log(this.state.my_groups);
+    
             this.setState({ popout: null, activeModal: null});
           }
         })
+      })
       })
     }
   }
@@ -455,6 +537,17 @@ class App extends React.Component {
      }
 
   }
+
+  save_marker = (e) => {
+    this.setPopout(<ScreenSpinner />);
+    axios.post('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/user/' + this.state.user.id + '/data/' + e, { value: this.state[e]})
+    .then(response => {
+      this.setPopout(null)
+      this.setState({ status: "Маркер сохранен"})
+      setTimeout(() => {this.setState({status: null})}, 1000)})
+    }
+    
+
 
   render () {
     const {
@@ -541,13 +634,68 @@ class App extends React.Component {
                 }
               ]}
             />
+            <ModalPage id='save_marker_trevel' onClose={() => this.setState({ activeModal: null, type: null})} header={<ModalPageHeader>Travelpayouts</ModalPageHeader>} dynamicContentHeight>
+              <Div>
+                <Radio name='type' value='user' onChange={(e) => this.setState({ type: e.target.value })}>Буду пользоваться {this.state.user.sex == 2 ? 'сам':'сама'}</Radio>
+                <Radio name='type' value='admin' onChange={(e) => this.setState({ type: e.target.value })}>Установлю в своё сообщество или пошлю ссылку друзьям</Radio>
+
+                <Input style={{ marginTop: 12 }} onChange={(e) => this.setState({ marker: e.target.value})} type='tel' min={100000} max={999999} placeholder='Введите маркер' />
+                <Button size='xl' style={{ marginTop: 12}} disabled={this.state.type == null} onClick={() => this.save_marker('marker')}>Сохранить</Button>
+                {this.state.status && <SimpleCell description={this.state.status}></SimpleCell>}
+                {this.state.type === 'admin' &&
+                  <RichCell disabled actions={
+                  <>
+                    <Button onClick={() => { bridge.send("VKWebAppCopyText", {"text": "https://vk.com/app7529463#ref" + this.state.user.id}); this.setState({ status: "Ссылка скопирована"}); setTimeout(() => {this.setState({status: null})}, 1000)}}>Копировать</Button>
+                    <Button onClick={() => bridge.send("VKWebAppShare", {"link": "https://vk.com/app7529463#ref" + this.state.user.id}).then().catch()}>Поделиться</Button>
+                  </>} multiline caption='Ссылка для установки гипермаркета "Дешевые авиабилеты" в сообщество'><Link>{"vk.com/app7529463#ref" + this.state.user.id}</Link></RichCell>
+                }
+                
+              </Div>
+            </ModalPage>
+            <ModalPage id='save_marker_booking' onClose={() => this.setState({ activeModal: null, type: null})} header={<ModalPageHeader>Booking</ModalPageHeader>} dynamicContentHeight>
+              <Div>
+                <SimpleCell disabled multiline><Title level='3' weight='heavy'>Ваш статус в социальной сети vk.com?</Title></SimpleCell>
+                <Radio name='type' value='user' onChange={(e) => this.setState({ type: e.target.value })}>Буду пользоваться {this.state.user.sex == 2 ? 'сам':'сама'}</Radio>
+                <Radio name='type' value='admin' onChange={(e) => this.setState({ type: e.target.value })}>Установлю в своё сообщество или пошлю ссылку друзьям</Radio>
+                <Input style={{ marginTop: 12 }} onChange={(e) => this.setState({ marker_booking: e.target.value})} placeholder='Введите маркер' />
+                <Button size='xl' style={{ marginTop: 12}} onClick={() => this.save_marker('marker_booking')}>Сохранить</Button>
+                {this.state.status && <SimpleCell description={this.state.status}></SimpleCell>}
+                {this.state.type === 'admin' &&
+                  <RichCell disabled actions={
+                  <>
+                    <Button onClick={() => { bridge.send("VKWebAppCopyText", {"text": "https://vk.com/app7529463#ref" + this.state.user.id}); this.setState({ status: "Ссылка скопирована"}); setTimeout(() => {this.setState({status: null})}, 1000)}}>Копировать</Button>
+                    <Button onClick={() => bridge.send("VKWebAppShare", {"link": "https://vk.com/app7529463#ref" + this.state.user.id}).then().catch()}>Поделиться</Button>
+                  </>} multiline caption='Ссылка для установки гипермаркета "Дешевые авиабилеты" в сообщество'><Link>{"vk.com/app7529463#ref" + this.state.user.id}</Link></RichCell>
+                }
+              </Div>
+              {this.state.snackbar}
+            </ModalPage>
+            <ModalPage id='save_marker_ozon' onClose={() => this.setState({ activeModal: null, type: null})} header={<ModalPageHeader>Ozon</ModalPageHeader>} dynamicContentHeight>
+              <Div>
+                <SimpleCell disabled multiline><Title level='3' weight='heavy'>Ваш статус в социальной сети vk.com?</Title></SimpleCell>
+                <Radio name='type' value='user' onChange={(e) => this.setState({ type: e.target.value })}>Буду пользоваться {this.state.user.sex == 2 ? 'сам':'сама'}</Radio>
+                <Radio name='type' value='admin' onChange={(e) => this.setState({ type: e.target.value })}>Установлю в своё сообщество или пошлю ссылку друзьям</Radio>
+                <Input style={{ marginTop: 12 }} onChange={(e) => this.setState({ marker_ozon: e.target.value})} placeholder='Введите маркер' />
+                <Button size='xl' style={{ marginTop: 12}} onClick={() => this.save_marker('marker_ozon')}>Сохранить</Button>
+                {this.state.type === 'admin' &&
+                  <RichCell disabled actions={
+                  <>
+                    <Button onClick={() => { bridge.send("VKWebAppCopyText", {"text": "https://vk.com/app7529463#ref" + this.state.user.id}); this.setState({ status: "Ссылка скопирована"}); setTimeout(() => {this.setState({status: null})}, 1000)}}>Копировать</Button>
+                    <Button onClick={() => bridge.send("VKWebAppShare", {"link": "https://vk.com/app7529463#ref" + this.state.user.id}).then().catch()}>Поделиться</Button>
+                  </>} multiline caption='Ссылка для установки гипермаркета "Дешевые авиабилеты" в сообщество'><Link>{"vk.com/app7529463#ref" + this.state.user.id}</Link></RichCell>
+                }
+              </Div>
+              {this.state.snackbar}
+            </ModalPage>
           </ModalRoot>
         }>
             <Help id='home' 
                   onChangeGroups={this.onChangeGroups}
                   state={this.state} 
                   openModal={this.openModal}
+                  goViget={this.goViget}
                   stop_audio={this.stop_audio}
+                  marker={this.state.marker}
                   setPopout={this.setPopout}/>
 
         </View>
@@ -578,6 +726,7 @@ class App extends React.Component {
           <Services 
             id='home'
             stop_audio={this.stop_audio}
+            goViget={this.goViget}
             openModal={this.openModal}
             onChangeGroups={this.onChangeGroups}
             setPopout={this.setPopout}
@@ -786,7 +935,7 @@ class App extends React.Component {
             onChangeGroups={this.onChangeGroups}
             onChange={this.onChangeForm}
             changeFunction={this.chooseGlobal}
-            changeDefaultName={(changeDefaultName) => this.setState({ changeDefaultName }, console.log(changeDefaultName))}
+            changeDefaultName={(changeDefaultName) => this.setState({ changeDefaultName })}
             openModal={this.openModal}
             onChangeGroups={this.onChangeGroups}
             setPopout={this.setPopout}

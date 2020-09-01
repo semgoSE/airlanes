@@ -1,5 +1,5 @@
 import React, {Component} from 'react'
-import { Panel, PanelHeader, List, SimpleCell, PanelSpinner, PanelHeaderBack, Button, FixedLayout } from '@vkontakte/vkui'
+import { Panel, PanelHeader, List, SimpleCell, PanelSpinner, PanelHeaderBack, Button, FixedLayout, Title } from '@vkontakte/vkui'
 import Icon28ViewOutline from '@vkontakte/icons/dist/28/view_outline';
 import Vitrina from '../components/Vitrina.mp3';
 export default class Groups extends Component {
@@ -28,7 +28,7 @@ export default class Groups extends Component {
               expandable
               onClick={openCatalog}
             >
-              {item.catalog}
+              <Title weight='heavy' level='2'>{item.catalog}</Title>
             </SimpleCell>
           )
         )

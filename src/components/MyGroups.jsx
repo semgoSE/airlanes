@@ -12,19 +12,6 @@ import Vitrina from '../components/Vitrina.mp3';
 import SnackbarError from './SnackbarError';
 import booking from '../img/booking.png';
 
-const bannerData = {
-  title: 'Отели, хостелы',
-  domain: 'booking.com',
-  trackingLink: 'https://www.booking.com?aid=1540284',
-  ctaText: 'Перейти',
-  advertisingLabel: 'Реклама',
-  iconLink: booking,
-  description: 'Бронирование отелей',
-  statistics: [
-    { url: '', type: 'playbackStarted' },
-    { url: '', type: 'click' }
-  ]
-};
 
 export class MyGroups extends Component {
   state = {
@@ -40,14 +27,12 @@ export class MyGroups extends Component {
   componentDidMount() {
     this.props.stop_audio();
     this.props.on_audio(Vitrina);
-    console.log(this.props.info)
     let obj = {};
     this.state.data.forEach((el) => {
       el.data.forEach((data) => {
           obj = {...obj, [data.code]:false};
       })
     })
-    console.log(obj)
     this.setState({list:obj});
   }
 
@@ -59,7 +44,6 @@ export class MyGroups extends Component {
       let i = this.state.deleted.findIndex(i => i.to === name);
       this.state.deleted.splice(i, 1);
     }
-    console.log(this.state.deleted)
   }
 
   openConfirm = (name, screenName, n, i) => { 
@@ -125,7 +109,7 @@ export class MyGroups extends Component {
   }
 
   delete = (id, n, i, t) => {
-    console.log(i)
+
     this.props.setPopout(<ScreenSpinner />);
     fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/remove-tags", {
       "headers": {
@@ -153,7 +137,6 @@ export class MyGroups extends Component {
 
 
   edit_ = (name, screenName, n, i) => {
-    console.log(screenName)
     const { state } = this.props
     this.props.setPopout(<ScreenSpinner />)
     bridge.sendPromise("VKWebAppGetAuthToken", {
@@ -190,7 +173,7 @@ export class MyGroups extends Component {
               let itemsWall = tags.response.items;
               let tags_obj = this.state.data[n].data[i].data.filter(element => { if(element.body.split('@')[1] ===  screenName) { return true; }});
               let tags_name = tags_obj.map(e => { return e.body});
-              console.log(tags_name);
+ 
               itemsWall.forEach((group) => {
                 let match = [...group.text.matchAll(/(#.*@.*)/g)];
                 if (match.length) {
@@ -282,6 +265,19 @@ export class MyGroups extends Component {
     const {
       data
     } = this.state
+    const bannerData = {
+      title: 'Отели, хостелы',
+      domain: 'booking.com',
+      trackingLink: `https://www.booking.com?aid=${this.props.state.marker_booking}`,
+      ctaText: 'Перейти',
+      advertisingLabel: 'Реклама',
+      iconLink: booking,
+      description: 'Бронирование отелей',
+      statistics: [
+        { url: '', type: 'playbackStarted' },
+        { url: '', type: 'click' }
+      ]
+    };
     return (
       <div>
         {this.state.is_market && <Div style={{ marginTop: 12 }}>
@@ -385,7 +381,7 @@ export class MyGroups extends Component {
                 data.map((item, n) => 
                   <div key={n} style={{ marginTop:(n == 0 && !this.state.is_market ? 24 : 0) }}>
                     {item.data.map((data, i) =>
-                      <div key={item.category}>
+                      <div>
                         <SimpleCell 
                           multiline
                           onClick={() => this.setState({ list:{...this.state.list, [data.code]:!this.state.list[data.code]}})}

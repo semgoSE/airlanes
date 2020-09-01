@@ -123,13 +123,19 @@ export class Settings extends Component {
     .then(listCountry => {
         listCountry.unshift({code:'all', nameTranslations:{ru:"любая"}})
         let s = listCountry.filter(country => country.nameTranslations.ru.indexOf(this.props.state.user.country.title) > -1)[0];
+        console.log(s)
+        if(s.code == null) {
+          s = { code:'RU', nameTranslations:{ ru: 'Россия'}}
+        }
         fetch(`https://cors-anywhere.herokuapp.com/https://api.cheapflights.sale/api/Cities/byCountry/`+s.code)
           .then(response => response.json())
           .then(cities => {
               cities.unshift({code:'all', nameTranslations:{ru:"любая"}})
               let n = cities.filter(city => city.nameTranslations.ru != null && city.nameTranslations.ru.indexOf(this.props.state.user.city.title) > -1)[0];
-              console.log(n);
-              this.setState({ listCountry, cities, countrySrc:s.code,  countrySrcCode:s.nameTranslations.ru, citySrc:n.code, citySrcCode:n.nameTranslations.ru}, this.props.setPopout(null));
+              if(n == undefined) {
+                n = { code: 'MOW', nameTranslations: {ru: 'Москва'}}
+              }
+              this.setState({ listCountry, cities, countrySrc:s.code ,  countrySrcCode:s.nameTranslations.ru, citySrc:n.code, citySrcCode:n.nameTranslations.ru}, this.props.setPopout(null));
         })
     })
 
@@ -137,6 +143,7 @@ export class Settings extends Component {
   }
 
   onChange = e => {
+    console.log(e.currentTarget.value)
     this.setState({
       [e.currentTarget.name]: e.currentTarget.value
     })
@@ -435,7 +442,7 @@ export class Settings extends Component {
       <Header>Когда</Header>
           <Tabs mode="buttons">
             {datesCnt && (
-              datesCnt.map((item, i) => <TabsItem style={{ marginLeft: 14 }} selected={activeCnt == i} onClick={() => this.setState({ activeCnt: i })}><Icon28RecentOutline fill={activeCnt == i ? '#0E62F1':'#4BBDE7'}/></TabsItem>)
+              datesCnt.map((item, i) => <TabsItem key={i} style={{ marginLeft: 14 }} selected={activeCnt == i} onClick={() => this.setState({ activeCnt: i })}><Icon28RecentOutline fill={activeCnt == i ? '#0E62F1':'#4BBDE7'}/></TabsItem>)
             )}
             {datesCnt.length < 3 && <TabsItem onClick={this.addFrom}><Icon16Add /></TabsItem>}
             {datesCnt.length > 1 && <TabsItem onClick={this.removeFrom} ><Icon16Cancel fill="rgb(255, 26, 0)"/></TabsItem>}
@@ -796,14 +803,14 @@ export class Settings extends Component {
           </div>
   }
           </FormLayoutGroup> 
-          <Select name='profitability' onChange={this.onChange} top="Показывать авиабилеты только с выгодой больше, %">
+          <Select name='profitability' value={this.state.profitability} onChange={this.onChange} top="Показывать авиабилеты только с выгодой больше, %">
             <option value='30'>30</option>
-            {(state.my_groups.length+state.countDB) >= 2 && <option value='30'>40</option>}
-            {(state.my_groups.length+state.countDB) >= 5 && <option value='30'>50</option>}
-            {(state.my_groups.length+state.countDB) >= 10 && <option value='30'>60</option>}
-            {(state.my_groups.length+state.countDB) >= 15 && <option value='30'>70</option>}
-            {(state.my_groups.length+state.countDB) >= 15 && <option value='30'>80</option>}
-            {(state.my_groups.length+state.countDB) >= 15 && <option value='30'>90</option>}
+            {(state.my_groups.length+state.countDB) >= 2 && <option value='40'>40</option>}
+            {(state.my_groups.length+state.countDB) >= 5 && <option value='50'>50</option>}
+            {(state.my_groups.length+state.countDB) >= 10 && <option value='60'>60</option>}
+            {(state.my_groups.length+state.countDB) >= 15 && <option value='70'>70</option>}
+            {(state.my_groups.length+state.countDB) >= 15 && <option value='80'>80</option>}
+            {(state.my_groups.length+state.countDB) >= 15 && <option value='90'>90</option>}
           </Select>
           <FormLayoutGroup top="Хочу вылететь в определенный день недели">
               <SimpleCell after={<Switch checked={this.state.allDays} name='all' onChange={(e) => {if(!((state.my_groups.length+state.countDB) < 5)) this.onChangeDays(e); else this.props.openModal('info_status')}} />}>в любой</SimpleCell>

@@ -150,7 +150,7 @@ export default class Admin extends Component {
                       })
                   })
               })
-        })
+        }).catch(err => this.props.setPopout(null))
     }
 
 

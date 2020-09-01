@@ -10,6 +10,7 @@ export default class Load extends Component {
 state = {
     welcome: '', 
     snackbar:null,
+    is_date: true
 }
 
 componentDidMount() {
@@ -25,24 +26,24 @@ componentDidMount() {
       });
     let h = new Date().getHours()
     if(h >=  0 && h < 6) {
-        this.setState({ welcome: 'Доброй ночи, ' + this.props.state.user.first_name + '!'})
+        this.setState({ welcome: 'Доброй ночи'})
         if(this.props.state.theme == 'bright_light' && this.props.is_first) {
         this.setState( {snackbar:<Snackbar onActionClick={() => this.props.onChangeGroups('theme', 'space_gray')} onClose={() => this.setState({snackbar:null})} action='Включить'>Включить темную тему?</Snackbar> })
         }
     }
     else 
         if(h >=6 && h < 12)
-            this.setState({ welcome: 'Доброе утро, ' + this.props.state.user.first_name + '!'})
+            this.setState({ welcome: 'Доброе утро'})
         else 
             if(h >=12 && h < 18)
-                this.setState({ welcome: 'Добрый день, ' + this.props.state.user.first_name + '!'})
+                this.setState({ welcome: 'Добрый день'})
             else {
-                this.setState({ welcome: 'Добрый вечер, ' + this.props.state.user.first_name + '!'})
+                this.setState({ welcome: 'Добрый вечер'})
                 if(this.props.state.theme == 'bright_light' && this.props.is_first) {
                     this.setState( {snackbar:<Snackbar onActionClick={() => this.props.onChangeGroups('theme', 'space_gray')} onClose={() => this.setState({snackbar:null})} action='Включить'>Включить темную тему?</Snackbar> })
                 }
             }
-    setTimeout(() => this.setState({welcome: 'Cегодня ' + new Date().toLocaleString('ru', { day: 'numeric', month: 'long' }) }), 2000)
+    setTimeout(() => this.setState({is_date:false, welcome: 'Cегодня ' + new Date().toLocaleString('ru', { day: 'numeric', month: 'long' }) }), 2000)
 }
 
 
@@ -76,7 +77,7 @@ componentDidMount() {
 
                 <FixedLayout vertical='bottom'>
                 {!is_first && <div style={{ marginBottom: 12 }} align='center'><span>{state.user.first_name + " " + state.user.last_name}</span><br />{this.getStatus(state.my_groups.length + state.countDB)}</div>}
-                {is_first && <div style={{ marginBottom: 12 }} align='center'><span>{this.state.welcome}</span></div>}
+        {(is_first && this.props.state.user.first_name) && <div style={{ marginBottom: 12 }} align='center'><span>{this.state.welcome}{this.state.is_date && (', ' + this.props.state.user.first_name + '!')}</span></div>}
                     <Spinner style={{ marginBottom: 12 }}/>
                     <Progress value={progress} />
                 </FixedLayout>

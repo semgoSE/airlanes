@@ -1,28 +1,28 @@
 {
   "files": {
-    "main.css": "/airline/static/css/main.d9f71fe1.chunk.css",
-    "main.js": "/airline/static/js/main.230b2ab2.chunk.js",
-    "main.js.map": "/airline/static/js/main.230b2ab2.chunk.js.map",
-    "runtime-main.js": "/airline/static/js/runtime-main.b6769775.js",
-    "runtime-main.js.map": "/airline/static/js/runtime-main.b6769775.js.map",
-    "static/css/2.1e562f28.chunk.css": "/airline/static/css/2.1e562f28.chunk.css",
-    "static/js/2.70df1f41.chunk.js": "/airline/static/js/2.70df1f41.chunk.js",
-    "static/js/2.70df1f41.chunk.js.map": "/airline/static/js/2.70df1f41.chunk.js.map",
-    "index.html": "/airline/index.html",
-    "precache-manifest.17a8397347e3923af4985d1d599136df.js": "/airline/precache-manifest.17a8397347e3923af4985d1d599136df.js",
-    "service-worker.js": "/airline/service-worker.js",
-    "static/css/2.1e562f28.chunk.css.map": "/airline/static/css/2.1e562f28.chunk.css.map",
-    "static/css/main.d9f71fe1.chunk.css.map": "/airline/static/css/main.d9f71fe1.chunk.css.map",
-    "static/media/Moy_vybor.mp3": "/airline/static/media/Moy_vybor.a2087fae.mp3",
-    "static/media/Vitrina.mp3": "/airline/static/media/Vitrina.8a8f5fc1.mp3",
-    "static/media/load.mp3": "/airline/static/media/load.c6adb8e5.mp3",
-    "static/media/logo.png": "/airline/static/media/logo.5ed619d6.png"
+    "main.css": "/airlines/static/css/main.d9f71fe1.chunk.css",
+    "main.js": "/airlines/static/js/main.776ad588.chunk.js",
+    "main.js.map": "/airlines/static/js/main.776ad588.chunk.js.map",
+    "runtime-main.js": "/airlines/static/js/runtime-main.5beb7bf7.js",
+    "runtime-main.js.map": "/airlines/static/js/runtime-main.5beb7bf7.js.map",
+    "static/css/2.1e562f28.chunk.css": "/airlines/static/css/2.1e562f28.chunk.css",
+    "static/js/2.b8d0bc29.chunk.js": "/airlines/static/js/2.b8d0bc29.chunk.js",
+    "static/js/2.b8d0bc29.chunk.js.map": "/airlines/static/js/2.b8d0bc29.chunk.js.map",
+    "index.html": "/airlines/index.html",
+    "precache-manifest.50d144e3f5446f0e480d3df9f194fe8e.js": "/airlines/precache-manifest.50d144e3f5446f0e480d3df9f194fe8e.js",
+    "service-worker.js": "/airlines/service-worker.js",
+    "static/css/2.1e562f28.chunk.css.map": "/airlines/static/css/2.1e562f28.chunk.css.map",
+    "static/css/main.d9f71fe1.chunk.css.map": "/airlines/static/css/main.d9f71fe1.chunk.css.map",
+    "static/media/Moy_vybor.mp3": "/airlines/static/media/Moy_vybor.a2087fae.mp3",
+    "static/media/Vitrina.mp3": "/airlines/static/media/Vitrina.8a8f5fc1.mp3",
+    "static/media/load.mp3": "/airlines/static/media/load.c6adb8e5.mp3",
+    "static/media/logo.png": "/airlines/static/media/logo.5ed619d6.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.b6769775.js",
+    "static/js/runtime-main.5beb7bf7.js",
     "static/css/2.1e562f28.chunk.css",
-    "static/js/2.70df1f41.chunk.js",
+    "static/js/2.b8d0bc29.chunk.js",
     "static/css/main.d9f71fe1.chunk.css",
-    "static/js/main.230b2ab2.chunk.js"
+    "static/js/main.776ad588.chunk.js"
   ]
 }

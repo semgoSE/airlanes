@@ -1,15 +1,15 @@
 {
   "files": {
     "main.css": "/airlines/static/css/main.d9f71fe1.chunk.css",
-    "main.js": "/airlines/static/js/main.776ad588.chunk.js",
-    "main.js.map": "/airlines/static/js/main.776ad588.chunk.js.map",
-    "runtime-main.js": "/airlines/static/js/runtime-main.5beb7bf7.js",
-    "runtime-main.js.map": "/airlines/static/js/runtime-main.5beb7bf7.js.map",
+    "main.js": "/airlines/static/js/main.6ce836a3.chunk.js",
+    "main.js.map": "/airlines/static/js/main.6ce836a3.chunk.js.map",
+    "runtime-main.js": "/airlines/static/js/runtime-main.e07a2aae.js",
+    "runtime-main.js.map": "/airlines/static/js/runtime-main.e07a2aae.js.map",
     "static/css/2.1e562f28.chunk.css": "/airlines/static/css/2.1e562f28.chunk.css",
-    "static/js/2.b8d0bc29.chunk.js": "/airlines/static/js/2.b8d0bc29.chunk.js",
-    "static/js/2.b8d0bc29.chunk.js.map": "/airlines/static/js/2.b8d0bc29.chunk.js.map",
+    "static/js/2.ffc1fb44.chunk.js": "/airlines/static/js/2.ffc1fb44.chunk.js",
+    "static/js/2.ffc1fb44.chunk.js.map": "/airlines/static/js/2.ffc1fb44.chunk.js.map",
     "index.html": "/airlines/index.html",
-    "precache-manifest.50d144e3f5446f0e480d3df9f194fe8e.js": "/airlines/precache-manifest.50d144e3f5446f0e480d3df9f194fe8e.js",
+    "precache-manifest.58096168f410bf68128c791eb95b47fb.js": "/airlines/precache-manifest.58096168f410bf68128c791eb95b47fb.js",
     "service-worker.js": "/airlines/service-worker.js",
     "static/css/2.1e562f28.chunk.css.map": "/airlines/static/css/2.1e562f28.chunk.css.map",
     "static/css/main.d9f71fe1.chunk.css.map": "/airlines/static/css/main.d9f71fe1.chunk.css.map",
@@ -19,10 +19,10 @@
     "static/media/logo.png": "/airlines/static/media/logo.5ed619d6.png"
   },
   "entrypoints": [
-    "static/js/runtime-main.5beb7bf7.js",
+    "static/js/runtime-main.e07a2aae.js",
     "static/css/2.1e562f28.chunk.css",
-    "static/js/2.b8d0bc29.chunk.js",
+    "static/js/2.ffc1fb44.chunk.js",
     "static/css/main.d9f71fe1.chunk.css",
-    "static/js/main.776ad588.chunk.js"
+    "static/js/main.6ce836a3.chunk.js"
   ]
 }

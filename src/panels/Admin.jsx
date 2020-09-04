@@ -2,32 +2,37 @@ import React, { Component } from 'react';
 import { Panel, PanelHeader, List, SimpleCell, ScreenSpinner, FormLayout, Textarea, Button, Cell } from '@vkontakte/vkui';
 import { VKMiniAppAPI } from '@vkontakte/vk-mini-apps-api';
 import bridge from '@vkontakte/vk-bridge'
+import axios from 'axios';
 
 const api = new VKMiniAppAPI();
  
 export default class Admin extends Component {
     state = {
         data:[],
+        act_groups:[],
         is_list:false,
         text:'',
     }
 
     componentDidMount() {
-        api.getAccessToken(this.props.state.appId, 'groups')
-        .then(accessToken => {
-            bridge.sendPromise("VKWebAppCallAPIMethod", {
-                method: "groups.get",
-                params: {
-                  access_token: accessToken.accessToken,
-                  filter: "admin",
-                  extended:1,
-                  v: 5.107
-                },
-              })
-            .then(response => {
-                this.setState({ data: response.response.items})
-            }).catch(err => console.log(err))
+        axios.get('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/chats').then(res => {
+          api.getAccessToken(this.props.state.appId, 'groups')
+          .then(accessToken => {
+              bridge.sendPromise("VKWebAppCallAPIMethod", {
+                  method: "groups.get",
+                  params: {
+                    access_token: accessToken.accessToken,
+                    filter: "admin",
+                    extended:1,
+                    v: 5.107
+                  },
+                })
+              .then(response => {
+                  this.setState({ data: response.response.items.map(item => ({ ...item, act:(res.data.indexOf(item.id) !== -1)})), act_groups: res.data})
+              }).catch(err => console.log(err))
+          })
         })
+
     }
 
 

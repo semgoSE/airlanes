@@ -361,7 +361,9 @@ class App extends React.Component {
 
   save_request = () => {  //сохранение подписки
     this.setState({ popout: <ScreenSpinner /> });
-    bridge.sendPromise("VKWebAppAllowMessagesFromGroup", {"group_id": 192548341})
+    axios.get('https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/groups?sex=' + this.state.user.sex)
+    .then(groups => {
+    bridge.sendPromise("VKWebAppAllowMessagesFromGroup", {"group_id": groups.data[this.state.countDB > 21 ? 21 : this.state.countDB]})
     .then(() => {
       fetch("https://cors-anywhere.herokuapp.com/https://appvk.flights.ru/save-user-api-request", {
         "headers": {
@@ -371,7 +373,7 @@ class App extends React.Component {
         },
         "referrer": "https://appvk.flights.ru/",
         "referrerPolicy": "no-referrer-when-downgrade",
-        "body": JSON.stringify(this.state.item),
+        "body": JSON.stringify({...this.state.item, group_id:groups.data[this.state.countDB]}),
         "method": "POST",
       })
       .then(response => response.json())
@@ -385,6 +387,7 @@ class App extends React.Component {
           this.setState({ popout: null });
     })
   })
+  }).catch(() => this.setPopout(null))
   }
   
   //редактирование state(Дял формы редактирования и создания подписки на сообщества)

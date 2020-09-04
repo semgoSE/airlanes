@@ -158,7 +158,7 @@ export default class Help extends Component {
                                 multiline
                                 actions={
                                     <>
-                                    
+                                    <Button href={v.href} target='_blank'>Перейти на сайт</Button>
                                     <Button onClick={() => this.props.goViget({...v,i, activeMenu: item.activeMenu, group:item.group,})}>{item.button}</Button>
                                     </>
                                 }

@@ -295,6 +295,9 @@ export class MyDB extends Component {
                   <p>
                   Вспомни об этой истории, когда будешь в тех краях и увидишь пролетающего над собой голубя...
                   </p>
+                  <Title weight='heavy' level='3'>Кто доставит дешевые авиабилеты в мои личные сообщения?</Title>
+
+                  <p>Подпишись и увидишь - женская курьерская авиаслужба моментально пришлет авиабилеты по выбранным параметрам. Хочешь все изменить? Это доступно в настройках в разделе "Помощь".</p>
                   <Link onClick={() => {this.setState({is_watch:!this.state.is_watch})}}>свернуть</Link>
                 </div>
                 }
@@ -386,6 +389,9 @@ export class MyDB extends Component {
                   <p>
                   Жозефина была родом с Мартиники, это Антильские острова и билеты туда ты тоже увидишь у нас.
                   </p>
+                  <Title weight='heavy' level='3'>Кто доставит дешевые авиабилеты в мои личные сообщения?</Title>
+
+                  <p>Подпишись и увидишь - мужская курьерская авиаслужба моментально пришлет авиабилеты по выбранным параметрам. Хочешь все изменить? Это доступно в настройках в разделе "Помощь".</p>
                   <Link onClick={() => {this.setState({is_watch:!this.state.is_watch})}}>свернуть</Link>
                 </div>
                 }
@@ -396,7 +402,7 @@ export class MyDB extends Component {
              {data.map((item, index) =>
               <div>
               <SimpleCell multiline onClick={() => this.setState({ list: {...this.state.list, [item.id]:!this.state.list[item.id]}})} style={{ fontWeight:'bold',  marginTop:(index == 0 && !this.state.is_market ? 24 : 0)}} after={<Icon28ChevronDownOutline fill='#4BBDE7' style={{ transform: `rotate(${this.state.list[item.id] ? '180deg' : '0'})` }} />}>
-                <Title weight='heavy' level='2'>{CONTINENTS[JSON.parse(item.output).continentDst] + (JSON.parse(item.output).countryDst ? " - " + JSON.parse(item.output).countryDst : '') + (JSON.parse(item.output).cityDst ? " - " + JSON.parse(item.output).cityDst : '')}</Title>
+             <Title weight='heavy' level='2'>{JSON.parse(item.output).citySrc} - {CONTINENTS[JSON.parse(item.output).continentDst] + (JSON.parse(item.output).countryDst ? " - " + JSON.parse(item.output).countryDst : '') + (JSON.parse(item.output).cityDst ? " - " + JSON.parse(item.output).cityDst : '')}</Title>
               </SimpleCell>
               {this.state.list[item.id] && 
               <div>
